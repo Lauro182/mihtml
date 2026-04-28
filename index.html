@@ -6,50 +6,48 @@
   <title>Análisis MLB Diario</title>
   <style>
     :root{
-      --bg:#f5f7fb;--card:#ffffff;--ink:#1f2937;--muted:#64748b;--line:#e5e7eb;
-      --good:#16a34a;--warn:#f59e0b;--bad:#dc2626;--blue:#2563eb;--soft:#eef4ff;
+      --bg:#f5f7fb;--card:#fff;--ink:#172033;--muted:#64748b;--line:#e5e7eb;
+      --ok:#16a34a;--warn:#d97706;--blue:#2563eb;--green:#22c55e;--soft:#eef4ff;
     }
     *{box-sizing:border-box}
     body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--ink)}
-    header{padding:18px 22px;background:linear-gradient(135deg,#eef4ff,#ffffff);border-bottom:1px solid var(--line)}
-    h1{margin:0 0 6px;font-size:24px}
-    h2{font-size:18px;margin:0 0 10px}
-    h3{font-size:16px;margin:0 0 8px}
+    header{padding:18px 22px;background:linear-gradient(135deg,#eef4ff,#fff);border-bottom:1px solid var(--line)}
+    h1{font-size:24px;margin:0 0 6px}
+    h2{font-size:18px;margin:18px 0 10px}
+    h3{font-size:15px;margin:0 0 7px}
     p{margin:4px 0;line-height:1.35}
-    main{padding:16px;max-width:1200px;margin:auto}
-    .note{color:var(--muted);font-size:13px}
+    main{max-width:1220px;margin:auto;padding:14px}
+    .note{font-size:12px;color:var(--muted)}
     .badge{display:inline-block;border-radius:999px;padding:4px 8px;font-size:11px;font-weight:700;margin:2px}
-    .b-ok{background:#dcfce7;color:#166534}.b-warn{background:#fef3c7;color:#92400e}
-    .b-info{background:#dbeafe;color:#1e40af}.b-bad{background:#fee2e2;color:#991b1b}
-    .summary{display:grid;grid-template-columns:repeat(5,minmax(120px,1fr));gap:10px;margin-bottom:14px}
-    .mini{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;box-shadow:0 1px 4px #00000008}
+    .b-ok{background:#dcfce7;color:#166534}.b-warn{background:#fef3c7;color:#92400e}.b-info{background:#dbeafe;color:#1e40af}
+    .summary{display:grid;grid-template-columns:repeat(5,minmax(120px,1fr));gap:10px;margin:12px 0}
+    .mini{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:11px;box-shadow:0 1px 4px #00000008}
     .mini strong{display:block;font-size:22px}
-    .games{display:grid;grid-template-columns:1fr;gap:12px;margin-bottom:16px}
-    .game{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;box-shadow:0 1px 6px #0000000a}
-    .top{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:8px;margin-bottom:10px}
-    .meta{font-size:13px;color:var(--muted)}
-    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-    .box{background:#f8fafc;border:1px solid var(--line);border-radius:12px;padding:10px}
-    ul{margin:6px 0 0 18px;padding:0}
-    li{margin:3px 0}
-    table{width:100%;border-collapse:collapse;font-size:13px}
-    th,td{border-bottom:1px solid var(--line);padding:7px;text-align:left;vertical-align:top}
-    th{color:#334155;background:#f8fafc}
-    .prob{margin:8px 0}
+    .games{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+    .game{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:13px;box-shadow:0 1px 6px #0000000a}
+    .top{display:flex;justify-content:space-between;gap:10px;border-bottom:1px solid var(--line);padding-bottom:8px;margin-bottom:9px}
+    .meta{font-size:12px;color:var(--muted)}
+    .box{background:#f8fafc;border:1px solid var(--line);border-radius:12px;padding:9px;margin-top:8px}
+    .prob{margin:7px 0;font-size:13px}
     .bar{height:12px;border-radius:999px;background:#e2e8f0;overflow:hidden;display:flex}
-    .away{background:#2563eb}.home{background:#22c55e}
+    .away{background:var(--blue)}.home{background:var(--green)}
     .winner{font-weight:700;color:#0f172a}
-    .skipped-list{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-    .skip{background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px}
-    footer{padding:14px 22px;color:var(--muted);font-size:12px;border-top:1px solid var(--line);background:#fff}
-    @media(max-width:800px){.summary,.grid,.skipped-list{grid-template-columns:1fr}.top{display:block}}
+    ul{margin:5px 0 0 18px;padding:0;font-size:13px}
+    li{margin:3px 0}
+    table{width:100%;border-collapse:collapse;font-size:12px}
+    th,td{border-bottom:1px solid var(--line);padding:6px;text-align:left;vertical-align:top}
+    th{background:#f1f5f9;color:#334155}
+    .skipped{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+    .skip{background:#fff;border:1px solid var(--line);border-radius:12px;padding:9px}
+    footer{margin-top:16px;padding:14px 22px;border-top:1px solid var(--line);background:#fff;color:var(--muted);font-size:12px}
+    @media(max-width:900px){.summary,.games,.skipped{grid-template-columns:1fr}.top{display:block}}
   </style>
 </head>
 <body>
   <header>
     <h1>Análisis MLB Diario</h1>
     <p><strong>Fecha:</strong> 2026-04-28 · <strong>Fuente:</strong> MLB Starting Lineups · <strong>Modo:</strong> Análisis completo</p>
-    <p class="note">Reporte independiente. Auditoría anti-momios ejecutada antes de generar este HTML.</p>
+    <p class="note">Análisis independiente. No usa momios ni líneas de apuestas. Solo se analizaron juegos con ambos abridores y lineups completas.</p>
     <span class="badge b-ok">AUDITORÍA ANTI-MOMIOS: APROBADA</span>
     <span class="badge b-info">ANÁLISIS COMPLETO</span>
   </header>
@@ -57,143 +55,195 @@
   <main>
     <section class="summary">
       <div class="mini"><span>Juegos encontrados</span><strong>15</strong></div>
-      <div class="mini"><span>Analizados</span><strong>1</strong></div>
-      <div class="mini"><span>Pendientes</span><strong>14</strong></div>
-      <div class="mini"><span>Fuente</span><strong>MLB</strong></div>
+      <div class="mini"><span>Analizados</span><strong>6</strong></div>
+      <div class="mini"><span>Pendientes</span><strong>9</strong></div>
+      <div class="mini"><span>Modo</span><strong>Completo</strong></div>
       <div class="mini"><span>Generado</span><strong>2026-04-28</strong></div>
     </section>
 
-    <section class="games analyzed-games">
-      <h2>Juego analizado</h2>
+    <section>
+      <h2>Juegos analizados</h2>
+      <div class="games">
 
-      <article class="game">
-        <div class="top">
-          <div>
-            <h3>Rays @ Guardians</h3>
-            <div class="meta">6:10 PM ET · Progressive Field</div>
-            <span class="badge b-ok">ELEGIBLE</span>
-            <span class="badge b-ok">LINEUPS COMPLETAS</span>
+        <article class="game">
+          <div class="top">
+            <div><h3>Rays @ Guardians</h3><span class="badge b-ok">ELEGIBLE</span></div>
+            <div class="meta">6:10 PM ET · Progressive Field<br>Nick Martinez RHP vs Tanner Bibee RHP</div>
           </div>
-          <div class="meta">
-            <strong>Abridores:</strong><br/>
-            Rays: Nick Martinez, RHP — 1-1, 2.10 ERA, 20 SO<br/>
-            Guardians: Tanner Bibee, RHP — 0-3, 4.45 ERA, 26 SO
-          </div>
-        </div>
-
-        <div class="grid">
+          <div class="prob"><span class="winner">Rays 53%</span> · Guardians 47%</div>
+          <div class="bar"><div class="away" style="width:53%"></div><div class="home" style="width:47%"></div></div>
+          <p class="note">Confianza: media · Score proyectado: 4-3 a 5-4</p>
           <div class="box">
-            <h3>Probabilidad estimada</h3>
-            <div class="prob"><span class="winner">Rays 56%</span> · Guardians 44%</div>
-            <div class="bar" aria-label="Probabilidad estimada">
-              <div class="away" style="width:56%"></div>
-              <div class="home" style="width:44%"></div>
-            </div>
-            <p class="note">Confianza: media · Rango de score: 4-3 a 5-4</p>
+            <strong>Resumen:</strong>
+            <p class="note">Martinez llega con mejor prevención de carreras reportada; Cleveland tiene lineup zurdo/switch-heavy que reduce la ventaja. Tampa Bay recibe una lectura ligera por abridor y balance ofensivo.</p>
           </div>
-
           <div class="box">
-            <h3>Factores principales</h3>
-            <ul>
-              <li>Ventaja moderada del abridor visitante por prevención de carreras reportada en la fuente oficial.</li>
-              <li>Lineup de Tampa Bay balanceado, con varios bateadores zurdos o ambidiestros ante RHP.</li>
-              <li>Cleveland concentra amenaza en la parte alta con Steven Kwan, Chase DeLauter, José Ramírez y Kyle Manzardo.</li>
-            </ul>
+            <strong>Factores:</strong>
+            <ul><li>Martinez: 2.10 ERA, 20 SO.</li><li>Bibee: 4.45 ERA, 26 SO.</li><li>Ambas lineups completas; predominio zurdo en Cleveland.</li></ul>
           </div>
-
           <div class="box">
-            <h3>Riesgos</h3>
-            <ul>
-              <li>Datos externos avanzados no incorporados; modelo conservador.</li>
-              <li>Ambos abridores son derechos y pueden cambiar el matchup si hay bullpen temprano.</li>
-              <li>El contacto de la parte media de Cleveland puede reducir la ventaja inicial de Tampa Bay.</li>
-            </ul>
+            <strong>Props destacados</strong>
+            <table><tr><th>Jugador</th><th>Prop</th><th>Prob.</th><th>Conf.</th></tr>
+              <tr><td>Chandler Simpson</td><td>1+ hit</td><td>62%</td><td>Media</td></tr>
+              <tr><td>José Ramírez</td><td>1+ total base</td><td>61%</td><td>Media</td></tr>
+              <tr><td>Yandy Díaz</td><td>1+ total base</td><td>59%</td><td>Media</td></tr>
+            </table>
           </div>
-        </div>
+        </article>
 
-        <div class="box" style="margin-top:10px">
-          <h3>Props destacados — estimación deportiva interna</h3>
-          <table>
-            <thead>
-              <tr><th>Jugador</th><th>Equipo</th><th>Prop</th><th>Prob.</th><th>Confianza</th><th>Razón deportiva</th></tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Chandler Simpson</td><td>Rays</td><td>1+ hit</td><td>62%</td><td>Media</td>
-                <td>Primer bateador, ventaja de volumen de turnos y perfil zurdo ante RHP.</td>
-              </tr>
-              <tr>
-                <td>José Ramírez</td><td>Guardians</td><td>1+ total base</td><td>61%</td><td>Media</td>
-                <td>Batea tercero, rol central de producción y ventaja de múltiples apariciones esperadas.</td>
-              </tr>
-              <tr>
-                <td>Yandy Díaz</td><td>Rays</td><td>1+ total base</td><td>59%</td><td>Media</td>
-                <td>Cuarto en el orden, contacto esperado y protección en la parte media del lineup.</td>
-              </tr>
-              <tr>
-                <td>Nick Martinez</td><td>Rays</td><td>5+ innings pitched</td><td>57%</td><td>Media</td>
-                <td>Lectura favorable por ERA reportada y matchup sin señales de lineup incompleto.</td>
-              </tr>
-              <tr>
-                <td>Kyle Manzardo</td><td>Guardians</td><td>1+ total base</td><td>55%</td><td>Media</td>
-                <td>Bateador zurdo en cuarto turno ante RHP, con oportunidad de daño si hay tráfico en bases.</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="box" style="margin-top:10px">
-          <h3>Lineups confirmadas</h3>
-          <div class="grid">
-            <div>
-              <strong>Rays</strong>
-              <ol>
-                <li>Chandler Simpson (L) LF</li><li>Junior Caminero (R) 3B</li><li>Jonathan Aranda (L) 1B</li>
-                <li>Yandy Díaz (R) DH</li><li>Jake Fraley (L) RF</li><li>Cedric Mullins (L) CF</li>
-                <li>Nick Fortes (R) C</li><li>Richie Palacios (L) 2B</li><li>Taylor Walls (S) SS</li>
-              </ol>
-            </div>
-            <div>
-              <strong>Guardians</strong>
-              <ol>
-                <li>Steven Kwan (L) LF</li><li>Chase DeLauter (L) DH</li><li>José Ramírez (S) 3B</li>
-                <li>Kyle Manzardo (L) 1B</li><li>Daniel Schneemann (L) CF</li><li>Angel Martínez (S) RF</li>
-                <li>Travis Bazzana (L) 2B</li><li>Bo Naylor (L) C</li><li>Brayan Rocchio (S) SS</li>
-              </ol>
-            </div>
-            <div>
-              <strong>Contexto</strong>
-              <p class="note">Bullpen/defensa/clima: sin señal suficiente para ventaja fuerte; se clasifican como neutrales por calidad de datos media-baja.</p>
-            </div>
+        <article class="game">
+          <div class="top">
+            <div><h3>Astros @ Orioles</h3><span class="badge b-ok">ELEGIBLE</span></div>
+            <div class="meta">6:35 PM ET · Oriole Park at Camden Yards<br>Kai-Wei Teng RHP vs Shane Baz RHP</div>
           </div>
-        </div>
-      </article>
+          <div class="prob"><span class="winner">Astros 54%</span> · Orioles 46%</div>
+          <div class="bar"><div class="away" style="width:54%"></div><div class="home" style="width:46%"></div></div>
+          <p class="note">Confianza: media · Score proyectado: 5-4 a 6-4</p>
+          <div class="box">
+            <strong>Resumen:</strong>
+            <p class="note">Houston muestra lineup completo con varios bates de contacto/poder en la parte alta. Teng llega con mejor ERA que Baz, aunque Baltimore conserva amenaza real con Henderson, Rutschman y Alonso.</p>
+          </div>
+          <div class="box">
+            <strong>Factores:</strong>
+            <ul><li>Teng: 2.16 ERA, 16 SO.</li><li>Baz: 5.08 ERA, 23 SO.</li><li>Houston abre con Correa, Alvarez, Paredes, Altuve y Walker.</li></ul>
+          </div>
+          <div class="box">
+            <strong>Props destacados</strong>
+            <table><tr><th>Jugador</th><th>Prop</th><th>Prob.</th><th>Conf.</th></tr>
+              <tr><td>Yordan Alvarez</td><td>1+ total base</td><td>64%</td><td>Media</td></tr>
+              <tr><td>Gunnar Henderson</td><td>1+ hit</td><td>60%</td><td>Media</td></tr>
+              <tr><td>Jose Altuve</td><td>1+ run scored</td><td>52%</td><td>Media</td></tr>
+            </table>
+          </div>
+        </article>
+
+        <article class="game">
+          <div class="top">
+            <div><h3>Rockies @ Reds</h3><span class="badge b-ok">ELEGIBLE</span></div>
+            <div class="meta">6:40 PM ET · Great American Ball Park<br>Kyle Freeland LHP vs Chase Burns RHP</div>
+          </div>
+          <div class="prob">Rockies 45% · <span class="winner">Reds 55%</span></div>
+          <div class="bar"><div class="away" style="width:45%"></div><div class="home" style="width:55%"></div></div>
+          <p class="note">Confianza: media · Score proyectado: 4-5 a 5-6</p>
+          <div class="box">
+            <strong>Resumen:</strong>
+            <p class="note">Burns aporta mayor señal de ponches y Cincinnati tiene localía en parque favorable para ofensiva. Freeland llega con buena ERA, pero enfrenta varios bates derechos y switch en el tramo fuerte del orden.</p>
+          </div>
+          <div class="box">
+            <strong>Factores:</strong>
+            <ul><li>Freeland: 2.30 ERA, 13 SO.</li><li>Burns: 2.57 ERA, 30 SO.</li><li>Reds con De La Cruz, Stewart, Steer, Stephenson y Hinds ante LHP.</li></ul>
+          </div>
+          <div class="box">
+            <strong>Props destacados</strong>
+            <table><tr><th>Jugador</th><th>Prop</th><th>Prob.</th><th>Conf.</th></tr>
+              <tr><td>Elly De La Cruz</td><td>1+ total base</td><td>63%</td><td>Media</td></tr>
+              <tr><td>Ketel Marte no aplica</td><td>—</td><td>—</td><td>—</td></tr>
+              <tr><td>Chase Burns</td><td>5+ strikeouts</td><td>58%</td><td>Media</td></tr>
+              <tr><td>Hunter Goodman</td><td>1+ total base</td><td>56%</td><td>Media</td></tr>
+            </table>
+          </div>
+        </article>
+
+        <article class="game">
+          <div class="top">
+            <div><h3>Giants @ Phillies</h3><span class="badge b-ok">ELEGIBLE</span></div>
+            <div class="meta">6:40 PM ET · Citizens Bank Park<br>Tyler Mahle RHP vs Jesús Luzardo LHP</div>
+          </div>
+          <div class="prob"><span class="winner">Giants 52%</span> · Phillies 48%</div>
+          <div class="bar"><div class="away" style="width:52%"></div><div class="home" style="width:48%"></div></div>
+          <p class="note">Confianza: baja-media · Score proyectado: 5-4 a 6-5</p>
+          <div class="box">
+            <strong>Resumen:</strong>
+            <p class="note">Duelo con más incertidumbre por ERAs altas de ambos abridores. San Francisco recibe ligera ventaja por enfrentar a un zurdo con marca de carreras permitidas elevada, aunque Philadelphia tiene núcleo peligroso con Turner, Schwarber y Harper.</p>
+          </div>
+          <div class="box">
+            <strong>Factores:</strong>
+            <ul><li>Mahle: 5.26 ERA, 26 SO.</li><li>Luzardo: 6.91 ERA, 33 SO.</li><li>Lineups completos con poder en ambos lados.</li></ul>
+          </div>
+          <div class="box">
+            <strong>Props destacados</strong>
+            <table><tr><th>Jugador</th><th>Prop</th><th>Prob.</th><th>Conf.</th></tr>
+              <tr><td>Trea Turner</td><td>1+ hit</td><td>62%</td><td>Media</td></tr>
+              <tr><td>Rafael Devers</td><td>1+ total base</td><td>60%</td><td>Media</td></tr>
+              <tr><td>Bryce Harper</td><td>1+ walk</td><td>49%</td><td>Baja-media</td></tr>
+            </table>
+          </div>
+        </article>
+
+        <article class="game">
+          <div class="top">
+            <div><h3>Red Sox @ Blue Jays</h3><span class="badge b-ok">ELEGIBLE</span></div>
+            <div class="meta">7:07 PM ET · Rogers Centre<br>Payton Tolle LHP vs Trey Yesavage RHP</div>
+          </div>
+          <div class="prob"><span class="winner">Red Sox 52%</span> · Blue Jays 48%</div>
+          <div class="bar"><div class="away" style="width:52%"></div><div class="home" style="width:48%"></div></div>
+          <p class="note">Confianza: baja · Score proyectado: 4-4 a 5-4</p>
+          <div class="box">
+            <strong>Resumen:</strong>
+            <p class="note">Boston tiene ligera ventaja por información disponible del abridor y lineup balanceado. Toronto tiene bateadores derechos fuertes ante LHP, por lo que el diferencial se mantiene estrecho.</p>
+          </div>
+          <div class="box">
+            <strong>Factores:</strong>
+            <ul><li>Tolle: 1.50 ERA, 11 SO.</li><li>Yesavage: sin ERA registrada en la página y 0 SO.</li><li>Toronto carga derechos en el inicio del orden.</li></ul>
+          </div>
+          <div class="box">
+            <strong>Props destacados</strong>
+            <table><tr><th>Jugador</th><th>Prop</th><th>Prob.</th><th>Conf.</th></tr>
+              <tr><td>Jarren Duran</td><td>1+ hit</td><td>61%</td><td>Media</td></tr>
+              <tr><td>Vladimir Guerrero Jr.</td><td>1+ total base</td><td>60%</td><td>Media</td></tr>
+              <tr><td>Roman Anthony</td><td>1+ total base</td><td>56%</td><td>Media</td></tr>
+            </table>
+          </div>
+        </article>
+
+        <article class="game">
+          <div class="top">
+            <div><h3>Mariners @ Twins</h3><span class="badge b-ok">ELEGIBLE</span></div>
+            <div class="meta">7:40 PM ET · Target Field<br>Logan Gilbert RHP vs Joe Ryan RHP</div>
+          </div>
+          <div class="prob"><span class="winner">Mariners 51%</span> · Twins 49%</div>
+          <div class="bar"><div class="away" style="width:51%"></div><div class="home" style="width:49%"></div></div>
+          <p class="note">Confianza: baja-media · Score proyectado: 4-4 a 5-4</p>
+          <div class="box">
+            <strong>Resumen:</strong>
+            <p class="note">El matchup es casi neutral. Gilbert y Ryan tienen perfiles de ponche similares; Seattle recibe mínima ventaja por profundidad del tramo alto con Crawford, Raleigh, Rodríguez, Naylor y Arozarena.</p>
+          </div>
+          <div class="box">
+            <strong>Factores:</strong>
+            <ul><li>Gilbert: 4.36 ERA, 35 SO.</li><li>Ryan: 3.90 ERA, 33 SO.</li><li>Ambas lineups completas y con mezcla de manos.</li></ul>
+          </div>
+          <div class="box">
+            <strong>Props destacados</strong>
+            <table><tr><th>Jugador</th><th>Prop</th><th>Prob.</th><th>Conf.</th></tr>
+              <tr><td>Julio Rodríguez</td><td>1+ hit</td><td>61%</td><td>Media</td></tr>
+              <tr><td>Byron Buxton</td><td>1+ total base</td><td>59%</td><td>Media</td></tr>
+              <tr><td>Logan Gilbert</td><td>5+ strikeouts</td><td>57%</td><td>Media</td></tr>
+            </table>
+          </div>
+        </article>
+
+      </div>
     </section>
 
-    <section class="games skipped-games">
-      <h2>Juegos pendientes o no analizados</h2>
-      <div class="skipped-list">
-        <div class="skip"><strong>Astros @ Orioles</strong><br><span class="badge b-warn">PENDIENTE</span><p class="note">MISSING_HOME_LINEUP — Orioles lineup no disponible completa.</p></div>
-        <div class="skip"><strong>Rockies @ Reds</strong><br><span class="badge b-warn">PENDIENTE</span><p class="note">MISSING_AWAY_STARTER — abridor de Colorado aparece como TBD.</p></div>
-        <div class="skip"><strong>Cardinals @ Pirates</strong><br><span class="badge b-warn">PENDIENTE</span><p class="note">MISSING_HOME_STARTER / MISSING_LINEUPS — abridor local y ambas lineups no completas.</p></div>
-        <div class="skip"><strong>Giants @ Phillies</strong><br><span class="badge b-warn">PENDIENTE</span><p class="note">MISSING_AWAY_LINEUP / MISSING_HOME_LINEUP — ambas lineups en TBD.</p></div>
-        <div class="skip"><strong>Red Sox @ Blue Jays</strong><br><span class="badge b-warn">PENDIENTE</span><p class="note">MISSING_AWAY_LINEUP — Boston lineup no disponible completa.</p></div>
-        <div class="skip"><strong>Nationals @ Mets</strong><br><span class="badge b-warn">PENDIENTE</span><p class="note">MISSING_AWAY_LINEUP — Washington lineup no disponible completa.</p></div>
-        <div class="skip"><strong>Tigers @ Braves</strong><br><span class="badge b-warn">PENDIENTE</span><p class="note">MISSING_AWAY_LINEUP / MISSING_HOME_LINEUP — ambas lineups en TBD.</p></div>
-        <div class="skip"><strong>Mariners @ Twins</strong><br><span class="badge b-warn">PENDIENTE</span><p class="note">MISSING_AWAY_LINEUP — Seattle lineup no disponible completa.</p></div>
-        <div class="skip"><strong>Angels @ White Sox</strong><br><span class="badge b-warn">PENDIENTE</span><p class="note">MISSING_AWAY_LINEUP / MISSING_HOME_LINEUP — ambas lineups en TBD.</p></div>
-        <div class="skip"><strong>D-backs @ Brewers</strong><br><span class="badge b-warn">PENDIENTE</span><p class="note">MISSING_AWAY_LINEUP / MISSING_HOME_LINEUP — ambas lineups en TBD.</p></div>
-        <div class="skip"><strong>Yankees @ Rangers</strong><br><span class="badge b-warn">PENDIENTE</span><p class="note">MISSING_AWAY_LINEUP / MISSING_HOME_LINEUP — ambas lineups en TBD.</p></div>
-        <div class="skip"><strong>Royals @ Athletics</strong><br><span class="badge b-warn">PENDIENTE</span><p class="note">MISSING_HOME_STARTER / MISSING_LINEUPS — abridor local y ambas lineups no completas.</p></div>
-        <div class="skip"><strong>Cubs @ Padres</strong><br><span class="badge b-warn">PENDIENTE</span><p class="note">MISSING_AWAY_LINEUP / MISSING_HOME_LINEUP — ambas lineups en TBD.</p></div>
-        <div class="skip"><strong>Marlins @ Dodgers</strong><br><span class="badge b-warn">PENDIENTE</span><p class="note">MISSING_AWAY_LINEUP / MISSING_HOME_LINEUP — ambas lineups en TBD.</p></div>
+    <section>
+      <h2>Juegos pendientes</h2>
+      <div class="skipped">
+        <div class="skip"><strong>Cardinals @ Pirates</strong><br><span class="badge b-warn">PENDIENTE</span><p class="note">PARTIAL_HOME_LINEUP — Pirates lineup aparece como TBD.</p></div>
+        <div class="skip"><strong>Nationals @ Mets</strong><br><span class="badge b-warn">PENDIENTE</span><p class="note">MISSING_AWAY_LINEUP — Nationals lineup aparece como TBD.</p></div>
+        <div class="skip"><strong>Tigers @ Braves</strong><br><span class="badge b-warn">PENDIENTE</span><p class="note">MISSING_AWAY_LINEUP — Tigers lineup aparece como TBD.</p></div>
+        <div class="skip"><strong>Angels @ White Sox</strong><br><span class="badge b-warn">PENDIENTE</span><p class="note">MISSING_AWAY_LINEUP / MISSING_HOME_LINEUP — ambas lineups aparecen como TBD.</p></div>
+        <div class="skip"><strong>D-backs @ Brewers</strong><br><span class="badge b-warn">PENDIENTE</span><p class="note">MISSING_HOME_LINEUP — Brewers lineup aparece como TBD.</p></div>
+        <div class="skip"><strong>Yankees @ Rangers</strong><br><span class="badge b-warn">PENDIENTE</span><p class="note">MISSING_AWAY_LINEUP / MISSING_HOME_LINEUP — ambas lineups aparecen como TBD.</p></div>
+        <div class="skip"><strong>Royals @ Athletics</strong><br><span class="badge b-warn">PENDIENTE</span><p class="note">MISSING_HOME_STARTER y lineups TBD.</p></div>
+        <div class="skip"><strong>Cubs @ Padres</strong><br><span class="badge b-warn">PENDIENTE</span><p class="note">MISSING_AWAY_LINEUP / MISSING_HOME_LINEUP — ambas lineups aparecen como TBD.</p></div>
+        <div class="skip"><strong>Marlins @ Dodgers</strong><br><span class="badge b-warn">PENDIENTE</span><p class="note">MISSING_AWAY_LINEUP / MISSING_HOME_LINEUP — ambas lineups aparecen como TBD.</p></div>
       </div>
     </section>
   </main>
 
   <footer>
-    Auditoría: reporte generado con análisis deportivo independiente; no se consultaron momios, líneas ni mercados de apuestas. 
-    QA: solo se analizó el juego marcado elegible por contar con ambos abridores y ambas lineups completas.
+    Auditoría: Este reporte fue generado sin consultar momios, líneas ni mercados de apuestas. 
+    Validación QA: todas las probabilidades suman 100% por juego; solo se analizaron juegos elegibles con abridores y lineups completas.
   </footer>
 </body>
 </html>
