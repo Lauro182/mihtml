@@ -31,12 +31,18 @@
     .games{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:12px;align-items:start}
     .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px;box-shadow:0 2px 8px rgba(15,23,42,.04)}
     .meta{font-size:12px;color:var(--muted);line-height:1.35}
-    .small{font-size:11px;color:var(--muted)}
-    .pending{background:#fff7ed}
-    .empty{border-style:dashed;background:#f8fafc}
+    .prob{margin:10px 0}
+    .bar{height:12px;background:#e5e7eb;border-radius:999px;overflow:hidden;display:flex}
+    .bar span:first-child{background:var(--away)}
+    .bar span:last-child{background:var(--home)}
+    .probrow{display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px}
+    ul{margin:6px 0 8px 18px;padding:0;font-size:12px}
     table{width:100%;border-collapse:collapse;margin-top:8px;font-size:12px}
     th,td{border-top:1px solid var(--line);padding:6px;text-align:left;vertical-align:top}
     th{color:#475569;background:#f8fafc}
+    .small{font-size:11px;color:var(--muted)}
+    .pending{background:#fff7ed}
+    .empty{border-style:dashed;background:#f8fafc}
     @media(max-width:760px){
       .summary{grid-template-columns:repeat(2,1fr)}
       main{padding:10px}
@@ -47,11 +53,11 @@
 <body>
   <header>
     <h1>Análisis MLB Diario</h1>
-    <p><b>Fecha:</b> 2026-04-29 · <b>Fuente:</b> MLB Starting Lineups · <b>Modo:</b> Diagnóstico</p>
-    <p class="note">Hora ajustada: se conserva la hora MLB y se muestra la hora local America/Mazatlan restando 3 horas.</p>
-    <p class="note">Análisis independiente. No usa momios ni líneas de apuestas. Solo se incluyeron como elegibles juegos con pitchers y lineups completas.</p>
+    <p><b>Fecha:</b> 2026-04-29 · <b>Fuente:</b> MLB Starting Lineups · <b>Modo:</b> Análisis completo</p>
+    <p class="note">Análisis independiente. No usa momios ni líneas de apuestas. Solo se incluyeron juegos con pitchers y lineups completas.</p>
+    <p class="note">Hora local aplicada: America/Mazatlan = hora MLB mostrada - 3 horas.</p>
     <span class="badge ok">Auditoría anti-momios: aprobada</span>
-    <span class="badge diag">DIAGNÓSTICO CON HORA AJUSTADA</span>
+    <span class="badge diag">ANÁLISIS COMPLETO</span>
   </header>
 
   <main>
@@ -60,7 +66,7 @@
       <div class="metric"><span>Elegibles</span><b>4</b></div>
       <div class="metric"><span>Pendientes</span><b>11</b></div>
       <div class="metric"><span>Generado</span><b>2026-04-29</b><span class="small">America/Mazatlan</span></div>
-      <div class="metric"><span>QA</span><b>OK</b><span class="small">Hora MLB -3h aplicada</span></div>
+      <div class="metric"><span>QA</span><b>OK</b><span class="small">Probabilidades 100%</span></div>
     </section>
 
     <h2>Juegos analizados</h2>
@@ -68,34 +74,102 @@
 
       <article class="card">
         <h3>Rays @ Guardians</h3>
-        <span class="badge ok">ELEGIBLE</span><span class="badge ok">LINEUP COMPLETA</span><span class="badge diag">DIAGNÓSTICO</span>
-        <p class="meta">Hora MLB: 1:10 PM ET · Hora local Mazatlán: 10:10 AM<br>Parque: Progressive Field<br>Pitchers: Drew Rasmussen RHP vs Gavin Williams RHP</p>
-        <p><b>Estado:</b> listo para análisis deportivo completo.</p>
-        <p class="small">Ambos pitchers y ambas lineups completas fueron detectadas.</p>
+        <span class="badge ok">ELEGIBLE</span><span class="badge ok">LINEUP COMPLETA</span>
+        <p class="meta">Estado: 10:10 AM Mazatlán / 1:10 PM MLB · Parque: Progressive Field<br>Pitchers: Drew Rasmussen RHP vs Gavin Williams RHP</p>
+        <div class="prob">
+          <div class="probrow"><b>Rays 52%</b><b>Guardians 48%</b></div>
+          <div class="bar"><span style="width:52%"></span><span style="width:48%"></span></div>
+        </div>
+        <p><b>Confianza:</b> media · <b>Rango estimado:</b> 3-2 a 5-4</p>
+        <p class="small">Juego muy parejo: Rasmussen llega con mejor prevención de carreras, mientras Williams ofrece mayor volumen de ponches. Tampa Bay trae mejor récord general y una alineación con varios bates zurdos que pueden incomodar a un derecho.</p>
+        <ul>
+          <li>Factor principal: Rasmussen 2.45 ERA y Rays 18-11 dan una ligera base visitante.</li>
+          <li>Factor principal: Williams tiene 44 SO y puede limitar rallies si controla el contacto zurdo.</li>
+          <li>Riesgo principal: ambos lineups cargan muchos zurdos contra pitchers derechos, elevando la varianza de contacto.</li>
+        </ul>
+        <table>
+          <tr><th>Jugador</th><th>Prop</th><th>Prob.</th><th>Conf.</th></tr>
+          <tr><td>Steven Kwan</td><td>1+ hit</td><td>65%</td><td>Media</td></tr>
+          <tr><td>Yandy Díaz</td><td>1+ total base</td><td>64%</td><td>Media</td></tr>
+          <tr><td>José Ramírez</td><td>1+ total base</td><td>63%</td><td>Media</td></tr>
+          <tr><td>Drew Rasmussen</td><td>5+ innings pitched</td><td>60%</td><td>Media</td></tr>
+          <tr><td>Gavin Williams</td><td>4+ strikeouts</td><td>59%</td><td>Media</td></tr>
+        </table>
       </article>
 
       <article class="card">
         <h3>Angels @ White Sox</h3>
-        <span class="badge ok">ELEGIBLE</span><span class="badge ok">LINEUP COMPLETA</span><span class="badge diag">DIAGNÓSTICO</span>
-        <p class="meta">Hora MLB: 1:10 PM ET · Hora local Mazatlán: 10:10 AM<br>Parque: Rate Field<br>Pitchers: Yusei Kikuchi LHP vs Erick Fedde RHP</p>
-        <p><b>Estado:</b> listo para análisis deportivo completo.</p>
-        <p class="small">Ambos pitchers y ambas lineups completas fueron detectadas.</p>
+        <span class="badge ok">ELEGIBLE</span><span class="badge ok">LINEUP COMPLETA</span>
+        <p class="meta">Estado: 10:10 AM Mazatlán / 1:10 PM MLB · Parque: Rate Field<br>Pitchers: Yusei Kikuchi LHP vs Erick Fedde RHP</p>
+        <div class="prob">
+          <div class="probrow"><b>Angels 48%</b><b>White Sox 52%</b></div>
+          <div class="bar"><span style="width:48%"></span><span style="width:52%"></span></div>
+        </div>
+        <p><b>Confianza:</b> baja-media · <b>Rango estimado:</b> 4-3 a 6-5</p>
+        <p class="small">Chicago recibe una ligera ventaja por el abridor: Fedde muestra una ERA claramente más estable que Kikuchi. La alineación de Angels tiene más nombres de poder, por lo que el margen se mantiene corto.</p>
+        <ul>
+          <li>Factor principal: Fedde 3.42 ERA frente a Kikuchi 6.21 ERA inclina el duelo inicial hacia Chicago.</li>
+          <li>Factor principal: Angels concentra poder derecho con Neto, Trout, Soler y Adell contra lanzador derecho.</li>
+          <li>Riesgo principal: White Sox depende de producción temprana; si Kikuchi encuentra comando, el juego se vuelve neutral.</li>
+        </ul>
+        <table>
+          <tr><th>Jugador</th><th>Prop</th><th>Prob.</th><th>Conf.</th></tr>
+          <tr><td>Mike Trout</td><td>1+ total base</td><td>66%</td><td>Media</td></tr>
+          <tr><td>Zach Neto</td><td>1+ hit</td><td>62%</td><td>Media</td></tr>
+          <tr><td>Munetaka Murakami</td><td>1+ total base</td><td>61%</td><td>Media</td></tr>
+          <tr><td>Erick Fedde</td><td>5+ innings pitched</td><td>58%</td><td>Media</td></tr>
+          <tr><td>Austin Hays</td><td>1+ RBI</td><td>38%</td><td>Baja</td></tr>
+        </table>
       </article>
 
       <article class="card">
         <h3>Mariners @ Twins</h3>
-        <span class="badge ok">ELEGIBLE</span><span class="badge ok">LINEUP COMPLETA</span><span class="badge diag">DIAGNÓSTICO</span>
-        <p class="meta">Hora MLB: 1:40 PM ET · Hora local Mazatlán: 10:40 AM<br>Parque: Target Field<br>Pitchers: George Kirby RHP vs Taj Bradley RHP</p>
-        <p><b>Estado:</b> listo para análisis deportivo completo.</p>
-        <p class="small">Ambos pitchers y ambas lineups completas fueron detectadas.</p>
+        <span class="badge ok">ELEGIBLE</span><span class="badge ok">LINEUP COMPLETA</span>
+        <p class="meta">Estado: 10:40 AM Mazatlán / 1:40 PM MLB · Parque: Target Field<br>Pitchers: George Kirby RHP vs Taj Bradley RHP</p>
+        <div class="prob">
+          <div class="probrow"><b>Mariners 51%</b><b>Twins 49%</b></div>
+          <div class="bar"><span style="width:51%"></span><span style="width:49%"></span></div>
+        </div>
+        <p><b>Confianza:</b> media · <b>Rango estimado:</b> 3-3 a 5-4</p>
+        <p class="small">Duelo de abridores casi equilibrado: Kirby y Bradley llegan con ERAs muy similares. Seattle recibe mínima ventaja por récord, profundidad de lineup y menor riesgo de tráfico si Kirby mantiene control.</p>
+        <ul>
+          <li>Factor principal: Kirby 2.97 ERA y perfil de control sostienen una ventaja pequeña para Seattle.</li>
+          <li>Factor principal: Bradley 2.91 ERA y 37 SO dan a Minnesota upside real de dominio.</li>
+          <li>Riesgo principal: Twins tiene poder derecho y zurdo distribuido; un error temprano puede cambiar el guion.</li>
+        </ul>
+        <table>
+          <tr><th>Jugador</th><th>Prop</th><th>Prob.</th><th>Conf.</th></tr>
+          <tr><td>Julio Rodríguez</td><td>1+ total base</td><td>65%</td><td>Media</td></tr>
+          <tr><td>Cal Raleigh</td><td>1+ total base</td><td>61%</td><td>Media</td></tr>
+          <tr><td>Byron Buxton</td><td>1+ total base</td><td>60%</td><td>Media</td></tr>
+          <tr><td>George Kirby</td><td>5+ innings pitched</td><td>62%</td><td>Media</td></tr>
+          <tr><td>Taj Bradley</td><td>4+ strikeouts</td><td>60%</td><td>Media</td></tr>
+        </table>
       </article>
 
       <article class="card">
         <h3>Yankees @ Rangers</h3>
-        <span class="badge ok">ELEGIBLE</span><span class="badge ok">LINEUP COMPLETA</span><span class="badge diag">DIAGNÓSTICO</span>
-        <p class="meta">Hora MLB: 2:35 PM ET · Hora local Mazatlán: 11:35 AM<br>Parque: Globe Life Field<br>Pitchers: Elmer Rodríguez RHP vs Nathan Eovaldi RHP</p>
-        <p><b>Estado:</b> listo para análisis deportivo completo.</p>
-        <p class="small">Ambos pitchers y ambas lineups completas fueron detectadas.</p>
+        <span class="badge ok">ELEGIBLE</span><span class="badge ok">LINEUP COMPLETA</span>
+        <p class="meta">Estado: 11:35 AM Mazatlán / 2:35 PM MLB · Parque: Globe Life Field<br>Pitchers: Elmer Rodríguez RHP vs Nathan Eovaldi RHP</p>
+        <div class="prob">
+          <div class="probrow"><b>Yankees 57%</b><b>Rangers 43%</b></div>
+          <div class="bar"><span style="width:57%"></span><span style="width:43%"></span></div>
+        </div>
+        <p><b>Confianza:</b> media · <b>Rango estimado:</b> 5-4 a 7-5</p>
+        <p class="small">Yankees obtiene la ventaja más clara del bloque por récord, poder del lineup y presencia de Aaron Judge en el corazón del orden. El riesgo es alto porque Rodríguez no trae muestra MLB visible en la página y Eovaldi tiene historial de absorber innings pese a su ERA actual.</p>
+        <ul>
+          <li>Factor principal: Yankees 20-10 y un orden con Judge, Bellinger y Chisholm elevan el techo ofensivo.</li>
+          <li>Factor principal: Rangers tiene varios zurdos contra Rodríguez, incluyendo Nimmo, Seager, Pederson y Carter.</li>
+          <li>Riesgo principal: abridor visitante con muestra limitada; si Texas lo ve temprano, el bullpen puede entrar pronto.</li>
+        </ul>
+        <table>
+          <tr><th>Jugador</th><th>Prop</th><th>Prob.</th><th>Conf.</th></tr>
+          <tr><td>Aaron Judge</td><td>1+ total base</td><td>70%</td><td>Alta</td></tr>
+          <tr><td>Corey Seager</td><td>1+ total base</td><td>64%</td><td>Media</td></tr>
+          <tr><td>Ben Rice</td><td>1+ hit</td><td>60%</td><td>Media</td></tr>
+          <tr><td>Cody Bellinger</td><td>1+ total base</td><td>60%</td><td>Media</td></tr>
+          <tr><td>Nathan Eovaldi</td><td>5+ innings pitched</td><td>55%</td><td>Baja</td></tr>
+        </table>
       </article>
 
     </section>
@@ -106,77 +180,77 @@
       <article class="card pending">
         <h3>Red Sox @ Blue Jays</h3>
         <span class="badge warn">PENDIENTE</span><span class="badge warn">MISSING_AWAY_LINEUP / MISSING_HOME_LINEUP</span>
-        <p class="meta">Hora MLB: 3:07 PM ET · Hora local Mazatlán: 12:07 PM<br>Parque: Rogers Centre<br>Pitchers: Brayan Bello RHP vs Eric Lauer LHP</p>
+        <p class="meta">Hora/estado: 12:07 PM Mazatlán / 3:07 PM MLB<br>Pitchers: Brayan Bello RHP vs Eric Lauer LHP</p>
         <p><b>Razón:</b> MLB muestra TBD para ambas lineups.</p>
       </article>
 
       <article class="card pending">
         <h3>Marlins @ Dodgers</h3>
         <span class="badge warn">PENDIENTE</span><span class="badge warn">MISSING_AWAY_LINEUP / MISSING_HOME_LINEUP</span>
-        <p class="meta">Hora MLB: 3:10 PM ET · Hora local Mazatlán: 12:10 PM<br>Parque: UNIQLO Field at Dodger Stadium<br>Pitchers: Sandy Alcantara RHP vs Tyler Glasnow RHP</p>
+        <p class="meta">Hora/estado: 12:10 PM Mazatlán / 3:10 PM MLB<br>Pitchers: Sandy Alcantara RHP vs Tyler Glasnow RHP</p>
         <p><b>Razón:</b> MLB muestra TBD para ambas lineups.</p>
       </article>
 
       <article class="card pending">
         <h3>Cubs @ Padres</h3>
         <span class="badge warn">PENDIENTE</span><span class="badge warn">MISSING_AWAY_LINEUP / MISSING_HOME_LINEUP</span>
-        <p class="meta">Hora MLB: 4:10 PM ET · Hora local Mazatlán: 1:10 PM<br>Parque: Petco Park<br>Pitchers: Jameson Taillon RHP vs Matt Waldron RHP</p>
+        <p class="meta">Hora/estado: 1:10 PM Mazatlán / 4:10 PM MLB<br>Pitchers: Jameson Taillon RHP vs Matt Waldron RHP</p>
         <p><b>Razón:</b> MLB muestra TBD para ambas lineups.</p>
       </article>
 
       <article class="card pending">
         <h3>Astros @ Orioles</h3>
         <span class="badge warn">PENDIENTE</span><span class="badge warn">MISSING_AWAY_LINEUP / MISSING_HOME_LINEUP</span>
-        <p class="meta">Hora MLB: 6:35 PM ET · Hora local Mazatlán: 3:35 PM<br>Parque: Oriole Park at Camden Yards<br>Pitchers: Peter Lambert RHP vs Chris Bassitt RHP</p>
+        <p class="meta">Hora/estado: 3:35 PM Mazatlán / 6:35 PM MLB<br>Pitchers: Peter Lambert RHP vs Chris Bassitt RHP</p>
         <p><b>Razón:</b> MLB muestra TBD para ambas lineups.</p>
       </article>
 
       <article class="card pending">
         <h3>Rockies @ Reds</h3>
         <span class="badge warn">PENDIENTE</span><span class="badge warn">MISSING_AWAY_LINEUP / MISSING_HOME_LINEUP</span>
-        <p class="meta">Hora MLB: 6:40 PM ET · Hora local Mazatlán: 3:40 PM<br>Parque: Great American Ball Park<br>Pitchers: Tomoyuki Sugano RHP vs Brandon Williamson LHP</p>
+        <p class="meta">Hora/estado: 3:40 PM Mazatlán / 6:40 PM MLB<br>Pitchers: Tomoyuki Sugano RHP vs Brandon Williamson LHP</p>
         <p><b>Razón:</b> MLB muestra TBD para ambas lineups.</p>
       </article>
 
       <article class="card pending">
         <h3>Cardinals @ Pirates</h3>
         <span class="badge warn">PENDIENTE</span><span class="badge warn">MISSING_AWAY_LINEUP / MISSING_HOME_LINEUP</span>
-        <p class="meta">Hora MLB: 6:40 PM ET · Hora local Mazatlán: 3:40 PM<br>Parque: PNC Park<br>Pitchers: Andre Pallante RHP vs Bubba Chandler RHP</p>
+        <p class="meta">Hora/estado: 3:40 PM Mazatlán / 6:40 PM MLB<br>Pitchers: Andre Pallante RHP vs Bubba Chandler RHP</p>
         <p><b>Razón:</b> MLB muestra TBD para ambas lineups.</p>
       </article>
 
       <article class="card pending">
         <h3>Giants @ Phillies</h3>
         <span class="badge warn">PENDIENTE</span><span class="badge warn">MISSING_AWAY_LINEUP / MISSING_HOME_LINEUP</span>
-        <p class="meta">Hora MLB: 6:40 PM ET · Hora local Mazatlán: 3:40 PM<br>Parque: Citizens Bank Park<br>Pitchers: Logan Webb RHP vs Cristopher Sánchez LHP</p>
+        <p class="meta">Hora/estado: 3:40 PM Mazatlán / 6:40 PM MLB<br>Pitchers: Logan Webb RHP vs Cristopher Sánchez LHP</p>
         <p><b>Razón:</b> MLB muestra TBD para ambas lineups.</p>
       </article>
 
       <article class="card pending">
         <h3>Nationals @ Mets</h3>
         <span class="badge warn">PENDIENTE</span><span class="badge warn">MISSING_AWAY_LINEUP / MISSING_HOME_LINEUP</span>
-        <p class="meta">Hora MLB: 7:10 PM ET · Hora local Mazatlán: 4:10 PM<br>Parque: Citi Field<br>Pitchers: Cade Cavalli RHP vs David Peterson LHP</p>
+        <p class="meta">Hora/estado: 4:10 PM Mazatlán / 7:10 PM MLB<br>Pitchers: Cade Cavalli RHP vs David Peterson LHP</p>
         <p><b>Razón:</b> MLB muestra TBD para ambas lineups.</p>
       </article>
 
       <article class="card pending">
         <h3>Tigers @ Braves</h3>
         <span class="badge warn">PENDIENTE</span><span class="badge warn">MISSING_AWAY_LINEUP / MISSING_HOME_LINEUP</span>
-        <p class="meta">Hora MLB: 7:15 PM ET · Hora local Mazatlán: 4:15 PM<br>Parque: Truist Park<br>Pitchers: Tarik Skubal LHP vs JR Ritchie RHP</p>
+        <p class="meta">Hora/estado: 4:15 PM Mazatlán / 7:15 PM MLB<br>Pitchers: Tarik Skubal LHP vs JR Ritchie RHP</p>
         <p><b>Razón:</b> MLB muestra TBD para ambas lineups.</p>
       </article>
 
       <article class="card pending">
         <h3>D-backs @ Brewers</h3>
         <span class="badge warn">PENDIENTE</span><span class="badge warn">MISSING_AWAY_LINEUP / MISSING_HOME_LINEUP</span>
-        <p class="meta">Hora MLB: 7:40 PM ET · Hora local Mazatlán: 4:40 PM<br>Parque: American Family Field<br>Pitchers: Eduardo Rodriguez LHP vs Brandon Sproat RHP</p>
+        <p class="meta">Hora/estado: 4:40 PM Mazatlán / 7:40 PM MLB<br>Pitchers: Eduardo Rodriguez LHP vs Brandon Sproat RHP</p>
         <p><b>Razón:</b> MLB muestra TBD para ambas lineups.</p>
       </article>
 
       <article class="card pending">
         <h3>Royals @ Athletics</h3>
         <span class="badge warn">PENDIENTE</span><span class="badge warn">MISSING_AWAY_LINEUP / MISSING_HOME_LINEUP</span>
-        <p class="meta">Hora MLB: 9:40 PM ET · Hora local Mazatlán: 6:40 PM<br>Parque: Sutter Health Park<br>Pitchers: Michael Wacha RHP vs Luis Severino RHP</p>
+        <p class="meta">Hora/estado: 6:40 PM Mazatlán / 9:40 PM MLB<br>Pitchers: Michael Wacha RHP vs Luis Severino RHP</p>
         <p><b>Razón:</b> MLB muestra TBD para ambas lineups.</p>
       </article>
 
@@ -185,7 +259,7 @@
 
   <footer>
     <p><b>Auditoría:</b> Este reporte fue generado sin consultar momios, líneas ni mercados de apuestas. Solo usa datos deportivos y lineups oficiales disponibles en MLB Starting Lineups.</p>
-    <p class="small">Confirmación horaria: cada hora local se calculó como hora MLB mostrada menos 3 horas para America/Mazatlan.</p>
+    <p class="small">QA: 4 juegos analizados pertenecen a la lista elegible; 11 juegos fueron marcados pendientes por lineups incompletas; las probabilidades de cada juego suman 100%; las props se presentan como estimaciones deportivas internas, no como recomendaciones de apuesta.</p>
   </footer>
 </body>
 </html>
