@@ -5,95 +5,238 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Análisis MLB Diario</title>
   <style>
-    :root{--bg:#f5f7fb;--card:#fff;--ink:#172033;--muted:#64748b;--line:#e5e7eb;--ok:#16a34a;--blue:#2563eb;--green:#22c55e}
+    :root{--bg:#f5f7fb;--card:#fff;--ink:#1f2937;--muted:#64748b;--line:#e5e7eb;--blue:#dbeafe;--green:#dcfce7;--amber:#fef3c7;--red:#fee2e2;--accent:#2563eb}
     *{box-sizing:border-box}
     body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--ink)}
-    header{padding:18px 22px;background:linear-gradient(135deg,#eef4ff,#fff);border-bottom:1px solid var(--line)}
-    main{max-width:1260px;margin:auto;padding:14px}
-    h1{font-size:24px;margin:0 0 6px} h2{font-size:18px;margin:18px 0 10px} h3{font-size:15px;margin:0 0 7px}
-    p{margin:4px 0;line-height:1.35}.note{font-size:12px;color:var(--muted)}
-    .badge{display:inline-block;border-radius:999px;padding:4px 8px;font-size:11px;font-weight:700;margin:2px}
-    .b-ok{background:#dcfce7;color:#166534}.b-info{background:#dbeafe;color:#1e40af}
-    .summary{display:grid;grid-template-columns:repeat(5,minmax(120px,1fr));gap:10px;margin:12px 0}
-    .mini{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:11px;box-shadow:0 1px 4px #00000008}.mini strong{display:block;font-size:22px}
-    .games{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-    .game{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:13px;box-shadow:0 1px 6px #0000000a}
-    .top{display:flex;justify-content:space-between;gap:10px;border-bottom:1px solid var(--line);padding-bottom:8px;margin-bottom:9px}
-    .meta{font-size:12px;color:var(--muted)}
-    .box{background:#f8fafc;border:1px solid var(--line);border-radius:12px;padding:9px;margin-top:8px}
-    .prob{margin:7px 0;font-size:13px}
-    .bar{height:12px;border-radius:999px;background:#e2e8f0;overflow:hidden;display:flex}
-    .away{background:var(--blue)}.home{background:var(--green)}.winner{font-weight:700;color:#0f172a}
-    footer{margin-top:16px;padding:14px 22px;border-top:1px solid var(--line);background:#fff;color:var(--muted);font-size:12px}
-    @media(max-width:900px){.summary,.games{grid-template-columns:1fr}.top{display:block}}
+    header,footer{padding:16px 18px;background:#ffffff;border-bottom:1px solid var(--line)}
+    h1{margin:0 0 6px;font-size:24px}
+    h2{margin:18px 0 10px;font-size:18px}
+    h3{margin:0 0 8px;font-size:16px}
+    p{margin:4px 0}
+    main{padding:14px;max-width:1320px;margin:auto}
+    .note{color:var(--muted);font-size:13px}
+    .summary{display:grid;grid-template-columns:repeat(5,minmax(120px,1fr));gap:10px;margin-bottom:14px}
+    .metric{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px}
+    .metric b{display:block;font-size:22px}
+    .badge{display:inline-block;padding:4px 8px;border-radius:999px;font-size:11px;font-weight:700;margin:2px 4px 2px 0}
+    .ok{background:var(--green);color:#166534}.diag{background:var(--blue);color:#1d4ed8}.warn{background:var(--amber);color:#92400e}.bad{background:var(--red);color:#991b1b}
+    .games{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:12px}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px;box-shadow:0 2px 8px rgba(15,23,42,.04)}
+    .meta{font-size:12px;color:var(--muted);line-height:1.35}
+    .prob{margin:10px 0}
+    .bar{height:12px;background:#e5e7eb;border-radius:999px;overflow:hidden;display:flex}
+    .bar span:first-child{background:#60a5fa}.bar span:last-child{background:#a7f3d0}
+    .probrow{display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px}
+    ul{margin:6px 0 8px 18px;padding:0;font-size:12px}
+    table{width:100%;border-collapse:collapse;margin-top:8px;font-size:12px}
+    th,td{border-top:1px solid var(--line);padding:6px;text-align:left;vertical-align:top}
+    th{color:#475569;background:#f8fafc}
+    .small{font-size:11px;color:var(--muted)}
+    .pending{background:#fff7ed}
+    @media(max-width:760px){.summary{grid-template-columns:repeat(2,1fr)}main{padding:10px}.games{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
-<header>
-  <h1>Análisis MLB Diario</h1>
-  <p><strong>Fecha:</strong> 2026-04-28 · <strong>Fuente:</strong> MLB Starting Lineups · <strong>Modo:</strong> Análisis completo actualizado</p>
-  <p class="note">Análisis independiente. Solo se analizaron juegos con abridores y lineups completas.</p>
-  <span class="badge b-ok">AUDITORÍA ANTI-MOMIOS: APROBADA</span>
-  <span class="badge b-info">ANÁLISIS COMPLETO</span>
-</header>
+  <header>
+    <h1>Análisis MLB Diario</h1>
+    <p><b>Fecha:</b> 2026-04-28 · <b>Fuente:</b> MLB Starting Lineups · <b>Modo:</b> Análisis completo</p>
+    <p class="note">Análisis independiente. No usa momios ni líneas de apuestas. Solo se incluyeron juegos con pitchers y lineups completas.</p>
+    <span class="badge ok">Auditoría anti-momios: aprobada</span>
+    <span class="badge diag">ANÁLISIS COMPLETO</span>
+  </header>
 
-<main>
-  <section class="summary">
-    <div class="mini"><span>Juegos encontrados</span><strong>15</strong></div>
-    <div class="mini"><span>Analizados</span><strong>15</strong></div>
-    <div class="mini"><span>Pendientes</span><strong>0</strong></div>
-    <div class="mini"><span>Nuevos elegibles</span><strong>2</strong></div>
-    <div class="mini"><span>Generado</span><strong>2026-04-28</strong></div>
-  </section>
+  <main>
+    <section class="summary">
+      <div class="metric"><span>Juegos encontrados</span><b>15</b></div>
+      <div class="metric"><span>Elegibles</span><b>15</b></div>
+      <div class="metric"><span>Pendientes</span><b>0</b></div>
+      <div class="metric"><span>Generado</span><b>2026-04-29</b><span class="small">America/Mazatlan</span></div>
+      <div class="metric"><span>QA</span><b>Pass</b><span class="small">Sin fuentes de mercado</span></div>
+    </section>
 
-  <section>
     <h2>Juegos analizados</h2>
-    <div class="games">
+    <section class="games analyzed-games">
 
-      <article class="game"><div class="top"><div><h3>Astros @ Orioles</h3><span class="badge b-ok">ELEGIBLE</span></div><div class="meta">Camden Yards<br>Kai-Wei Teng RHP vs Shane Baz RHP</div></div><div class="prob"><span class="winner">Astros 53%</span> · Orioles 47%</div><div class="bar"><div class="away" style="width:53%"></div><div class="home" style="width:47%"></div></div><p class="note">Confianza: media · Score: 5-4</p><div class="box">Houston conserva ligera ventaja por combinación de abridor y parte alta ofensiva. Props: Yordan Alvarez 1+ total base 64% · Gunnar Henderson 1+ hit 60% · Jose Altuve 1+ run scored 52%.</div></article>
+      <article class="card">
+        <h3>Rays @ Guardians</h3>
+        <span class="badge ok">ELEGIBLE</span><span class="badge ok">LINEUP COMPLETA</span>
+        <p class="meta">Estado: final · Parque: Progressive Field<br>Pitchers: Nick Martinez, LD vs Tanner Bibee, LD</p>
+        <div class="prob"><div class="probrow"><b>Rays 52%</b><b>Guardians 48%</b></div><div class="bar"><span style="width:52%"></span><span style="width:48%"></span></div></div>
+        <p><b>Confianza:</b> media · <b>Rango estimado:</b> 4-3 a 5-4</p>
+        <p class="small">Martinez llega con mejor prevención de carreras; Cleveland compensa con varios zurdos y contacto alto en la parte superior.</p>
+        <ul><li>Ventaja ligera de abridor para Tampa Bay.</li><li>Riesgo: lineup de Cleveland cargado a zurdos ante pitcher derecho.</li></ul>
+        <table><tr><th>Jugador</th><th>Prop</th><th>Prob.</th><th>Conf.</th></tr><tr><td>Steven Kwan</td><td>1+ hit</td><td>66%</td><td>Media</td></tr><tr><td>Junior Caminero</td><td>1+ total base</td><td>62%</td><td>Media</td></tr><tr><td>Tanner Bibee</td><td>4+ strikeouts</td><td>61%</td><td>Media</td></tr></table>
+      </article>
 
-      <article class="game"><div class="top"><div><h3>Rockies @ Reds</h3><span class="badge b-ok">ELEGIBLE</span></div><div class="meta">Great American Ball Park<br>Kyle Freeland LHP vs Chase Burns RHP</div></div><div class="prob">Rockies 45% · <span class="winner">Reds 55%</span></div><div class="bar"><div class="away" style="width:45%"></div><div class="home" style="width:55%"></div></div><p class="note">Confianza: media · Score: 4-5 a 5-6</p><div class="box">Burns aporta ventaja de ponches y Cincinnati tiene buen encaje ante LHP. Props: Elly De La Cruz 1+ total base 63% · Chase Burns 5+ strikeouts 59% · Hunter Goodman 1+ total base 56%.</div></article>
+      <article class="card">
+        <h3>Astros @ Orioles</h3>
+        <span class="badge ok">ELEGIBLE</span><span class="badge ok">LINEUP COMPLETA</span>
+        <p class="meta">Estado: final · Parque: Oriole Park at Camden Yards<br>Pitchers: Kai-Wei Teng, LD vs Shane Baz, LD</p>
+        <div class="prob"><div class="probrow"><b>Astros 49%</b><b>Orioles 51%</b></div><div class="bar"><span style="width:49%"></span><span style="width:51%"></span></div></div>
+        <p><b>Confianza:</b> baja-media · <b>Rango estimado:</b> 4-4 a 5-4</p>
+        <p class="small">Baltimore tiene ligera ventaja por profundidad ofensiva y poder medio; Houston presenta bates de contacto y poder en el núcleo.</p>
+        <ul><li>Baz ofrece techo de ponches razonable.</li><li>Riesgo: ambos lineups tienen poder suficiente para cambiar el juego temprano.</li></ul>
+        <table><tr><th>Jugador</th><th>Prop</th><th>Prob.</th><th>Conf.</th></tr><tr><td>Yordan Alvarez</td><td>1+ total base</td><td>65%</td><td>Media</td></tr><tr><td>Gunnar Henderson</td><td>1+ hit</td><td>63%</td><td>Media</td></tr><tr><td>Shane Baz</td><td>4+ strikeouts</td><td>60%</td><td>Media</td></tr></table>
+      </article>
 
-      <article class="game"><div class="top"><div><h3>Cardinals @ Pirates</h3><span class="badge b-ok">ELEGIBLE</span></div><div class="meta">PNC Park<br>Kyle Leahy RHP vs Braxton Ashcraft RHP</div></div><div class="prob">Cardinals 46% · <span class="winner">Pirates 54%</span></div><div class="bar"><div class="away" style="width:46%"></div><div class="home" style="width:54%"></div></div><p class="note">Confianza: media · Score: 4-5</p><div class="box">Ashcraft tiene mejor perfil de abridor y Pittsburgh suma balance zurdo/switch. Props: Oneil Cruz 1+ total base 62% · Braxton Ashcraft 5+ strikeouts 58% · Alec Burleson 1+ hit 56%.</div></article>
+      <article class="card">
+        <h3>Rockies @ Rojos</h3>
+        <span class="badge ok">ELEGIBLE</span><span class="badge ok">LINEUP COMPLETA</span>
+        <p class="meta">Estado: final · Parque: Great American Ball Park<br>Pitchers: Kyle Freeland, LZ vs Chase Burns, LD</p>
+        <div class="prob"><div class="probrow"><b>Rockies 42%</b><b>Rojos 58%</b></div><div class="bar"><span style="width:42%"></span><span style="width:58%"></span></div></div>
+        <p><b>Confianza:</b> media · <b>Rango estimado:</b> 5-4 a 6-4</p>
+        <p class="small">Burns entra con perfil de mayor dominio; Cincinnati alinea varios bates derechos contra Freeland en parque favorable al bateo.</p>
+        <ul><li>Ventaja de abridor y contexto ofensivo para Cincinnati.</li><li>Riesgo: el parque eleva volatilidad para ambos pitchers.</li></ul>
+        <table><tr><th>Jugador</th><th>Prop</th><th>Prob.</th><th>Conf.</th></tr><tr><td>Elly De La Cruz</td><td>1+ total base</td><td>66%</td><td>Media</td></tr><tr><td>Matt McLain</td><td>1+ hit</td><td>62%</td><td>Media</td></tr><tr><td>Chase Burns</td><td>5+ strikeouts</td><td>64%</td><td>Media</td></tr></table>
+      </article>
 
-      <article class="game"><div class="top"><div><h3>Giants @ Phillies</h3><span class="badge b-ok">ELEGIBLE</span></div><div class="meta">Citizens Bank Park<br>Tyler Mahle RHP vs Jesús Luzardo LHP</div></div><div class="prob"><span class="winner">Giants 51%</span> · Phillies 49%</div><div class="bar"><div class="away" style="width:51%"></div><div class="home" style="width:49%"></div></div><p class="note">Confianza: baja-media · Score: 5-5</p><div class="box">Riesgo de carreras en ambos abridores; ligera inclinación por matchup de San Francisco ante LHP. Props: Trea Turner 1+ hit 62% · Rafael Devers 1+ total base 60% · Bryce Harper 1+ walk 49%.</div></article>
+      <article class="card">
+        <h3>Cardenales @ Piratas</h3>
+        <span class="badge ok">ELEGIBLE</span><span class="badge ok">LINEUP COMPLETA</span>
+        <p class="meta">Estado: final · Parque: PNC Park<br>Pitchers: Kyle Leahy, LD vs Braxton Ashcraft, LD</p>
+        <div class="prob"><div class="probrow"><b>Cardenales 47%</b><b>Piratas 53%</b></div><div class="bar"><span style="width:47%"></span><span style="width:53%"></span></div></div>
+        <p><b>Confianza:</b> media · <b>Rango estimado:</b> 4-4 a 5-4</p>
+        <p class="small">Ashcraft muestra mejor combinación de prevención y ponches; Pittsburgh suma zurdos de impacto ante Leahy.</p>
+        <ul><li>Ventaja moderada de abridor local.</li><li>Riesgo: St. Louis tiene zurdos que pueden presionar temprano.</li></ul>
+        <table><tr><th>Jugador</th><th>Prop</th><th>Prob.</th><th>Conf.</th></tr><tr><td>Oneil Cruz</td><td>1+ total base</td><td>65%</td><td>Media</td></tr><tr><td>Braxton Ashcraft</td><td>4+ strikeouts</td><td>63%</td><td>Media</td></tr><tr><td>Alec Burleson</td><td>1+ hit</td><td>61%</td><td>Media</td></tr></table>
+      </article>
 
-      <article class="game"><div class="top"><div><h3>Red Sox @ Blue Jays</h3><span class="badge b-ok">ELEGIBLE</span></div><div class="meta">Rogers Centre<br>Payton Tolle LHP vs Trey Yesavage RHP</div></div><div class="prob"><span class="winner">Red Sox 52%</span> · Blue Jays 48%</div><div class="bar"><div class="away" style="width:52%"></div><div class="home" style="width:48%"></div></div><p class="note">Confianza: baja · Score: 4-4 a 5-4</p><div class="box">Boston recibe mínima ventaja, aunque Toronto tiene derechos fuertes ante LHP. Props: Jarren Duran 1+ hit 61% · Vladimir Guerrero Jr. 1+ total base 60% · Roman Anthony 1+ total base 56%.</div></article>
+      <article class="card">
+        <h3>Gigantes @ Phillies</h3>
+        <span class="badge ok">ELEGIBLE</span><span class="badge ok">LINEUP COMPLETA</span>
+        <p class="meta">Estado: final · Parque: Citizens Bank Park<br>Pitchers: Tyler Mahle, LD vs Jesús Luzardo, LZ</p>
+        <div class="prob"><div class="probrow"><b>Gigantes 51%</b><b>Phillies 49%</b></div><div class="bar"><span style="width:51%"></span><span style="width:49%"></span></div></div>
+        <p><b>Confianza:</b> baja · <b>Rango estimado:</b> 4-4 a 5-5</p>
+        <p class="small">Luzardo aporta ponches, pero su prevención reciente eleva riesgo. San Francisco mezcla contacto zurdo y poder derecho.</p>
+        <ul><li>Duelo muy parejo por calidad de lineups.</li><li>Riesgo: Citizens Bank puede amplificar contacto fuerte.</li></ul>
+        <table><tr><th>Jugador</th><th>Prop</th><th>Prob.</th><th>Conf.</th></tr><tr><td>Luis Arraez</td><td>1+ hit</td><td>70%</td><td>Media</td></tr><tr><td>Bryce Harper</td><td>1+ total base</td><td>66%</td><td>Media</td></tr><tr><td>Jesús Luzardo</td><td>5+ strikeouts</td><td>62%</td><td>Media</td></tr></table>
+      </article>
 
-      <article class="game"><div class="top"><div><h3>Nationals @ Mets</h3><span class="badge b-ok">ELEGIBLE</span></div><div class="meta">Citi Field<br>Zack Littell RHP vs Clay Holmes RHP</div></div><div class="prob">Nationals 42% · <span class="winner">Mets 58%</span></div><div class="bar"><div class="away" style="width:42%"></div><div class="home" style="width:58%"></div></div><p class="note">Confianza: media · Score: 4-6</p><div class="box">Holmes tiene ventaja clara en prevención de carreras; Mets tienen más profundidad ofensiva. Props: Juan Soto 1+ total base 64% · James Wood 1+ hit 58% · Clay Holmes 5+ innings pitched 56%.</div></article>
+      <article class="card">
+        <h3>Red Sox @ Azulejos</h3>
+        <span class="badge ok">ELEGIBLE</span><span class="badge ok">LINEUP COMPLETA</span>
+        <p class="meta">Estado: final · Parque: Rogers Centre<br>Pitchers: Payton Tolle, LZ vs Trey Yesavage, LD</p>
+        <div class="prob"><div class="probrow"><b>Red Sox 48%</b><b>Azulejos 52%</b></div><div class="bar"><span style="width:48%"></span><span style="width:52%"></span></div></div>
+        <p><b>Confianza:</b> baja-media · <b>Rango estimado:</b> 4-4 a 5-4</p>
+        <p class="small">Toronto tiene ventaja leve por localía y núcleo derecho ante zurdo; Boston contrarresta con zurdos de impacto ante derecho.</p>
+        <ul><li>Lineups balanceados, sin separación fuerte.</li><li>Riesgo: muestras de pitchers aún reducidas.</li></ul>
+        <table><tr><th>Jugador</th><th>Prop</th><th>Prob.</th><th>Conf.</th></tr><tr><td>Vladimir Guerrero Jr.</td><td>1+ total base</td><td>67%</td><td>Media</td></tr><tr><td>Jarren Duran</td><td>1+ hit</td><td>64%</td><td>Media</td></tr><tr><td>Roman Anthony</td><td>1+ total base</td><td>60%</td><td>Media</td></tr></table>
+      </article>
 
-      <article class="game"><div class="top"><div><h3>Tigers @ Braves</h3><span class="badge b-ok">ELEGIBLE</span></div><div class="meta">Truist Park<br>Casey Mize RHP vs Martín Pérez LHP</div></div><div class="prob">Tigers 49% · <span class="winner">Braves 51%</span></div><div class="bar"><div class="away" style="width:49%"></div><div class="home" style="width:51%"></div></div><p class="note">Confianza: baja-media · Score: 4-4 a 5-4</p><div class="box">Mize ofrece mejor ponche; Atlanta compensa con localía y profundidad. Props: Ronald Acuña Jr. 1+ hit 63% · Casey Mize 4+ strikeouts 58% · Matt Olson 1+ total base 57%.</div></article>
+      <article class="card">
+        <h3>Nacionales @ Mets</h3>
+        <span class="badge ok">ELEGIBLE</span><span class="badge ok">LINEUP COMPLETA</span>
+        <p class="meta">Estado: final · Parque: Citi Field<br>Pitchers: Zack Littell, LD vs Clay Holmes, LD</p>
+        <div class="prob"><div class="probrow"><b>Nacionales 40%</b><b>Mets 60%</b></div><div class="bar"><span style="width:40%"></span><span style="width:60%"></span></div></div>
+        <p><b>Confianza:</b> media · <b>Rango estimado:</b> 5-3 a 6-4</p>
+        <p class="small">Holmes presenta ventaja clara de prevención frente a Littell; Mets tiene más poder concentrado en el tramo alto.</p>
+        <ul><li>Ventaja de abridor y poder para Mets.</li><li>Riesgo: Washington tiene varios zurdos de contacto.</li></ul>
+        <table><tr><th>Jugador</th><th>Prop</th><th>Prob.</th><th>Conf.</th></tr><tr><td>Juan Soto</td><td>1+ walk</td><td>68%</td><td>Media</td></tr><tr><td>Bo Bichette</td><td>1+ hit</td><td>65%</td><td>Media</td></tr><tr><td>Clay Holmes</td><td>5+ innings pitched</td><td>61%</td><td>Media</td></tr></table>
+      </article>
 
-      <article class="game"><div class="top"><div><h3>Mariners @ Twins</h3><span class="badge b-ok">ELEGIBLE</span></div><div class="meta">Target Field<br>Logan Gilbert RHP vs Joe Ryan RHP</div></div><div class="prob"><span class="winner">Mariners 51%</span> · Twins 49%</div><div class="bar"><div class="away" style="width:51%"></div><div class="home" style="width:49%"></div></div><p class="note">Confianza: baja-media · Score: 4-4 a 5-4</p><div class="box">Duelo casi neutral; Gilbert trae volumen de ponche y Ryan mejor ERA. Props: Julio Rodríguez 1+ hit 61% · Byron Buxton 1+ total base 59% · Logan Gilbert 5+ strikeouts 57%.</div></article>
+      <article class="card">
+        <h3>Tigres @ Bravos</h3>
+        <span class="badge ok">ELEGIBLE</span><span class="badge ok">LINEUP COMPLETA</span>
+        <p class="meta">Estado: final · Parque: Truist Park<br>Pitchers: Casey Mize, LD vs Martín Pérez, LZ</p>
+        <div class="prob"><div class="probrow"><b>Tigres 47%</b><b>Bravos 53%</b></div><div class="bar"><span style="width:47%"></span><span style="width:53%"></span></div></div>
+        <p><b>Confianza:</b> media · <b>Rango estimado:</b> 4-4 a 5-4</p>
+        <p class="small">Atlanta tiene lineup profundo y récord fuerte; Detroit cuenta con varios derechos ante el zurdo Pérez.</p>
+        <ul><li>Ventaja ofensiva ligera para Atlanta.</li><li>Riesgo: matchup mano a mano favorece a varios bates de Detroit.</li></ul>
+        <table><tr><th>Jugador</th><th>Prop</th><th>Prob.</th><th>Conf.</th></tr><tr><td>Ronald Acuña Jr.</td><td>1+ hit</td><td>67%</td><td>Media</td></tr><tr><td>Matt Olson</td><td>1+ total base</td><td>64%</td><td>Media</td></tr><tr><td>Casey Mize</td><td>4+ strikeouts</td><td>59%</td><td>Media</td></tr></table>
+      </article>
 
-      <article class="game"><div class="top"><div><h3>Angels @ White Sox</h3><span class="badge b-ok">ELEGIBLE</span></div><div class="meta">Rate Field<br>José Soriano RHP vs Davis Martin RHP</div></div><div class="prob"><span class="winner">Angels 55%</span> · White Sox 45%</div><div class="bar"><div class="away" style="width:55%"></div><div class="home" style="width:45%"></div></div><p class="note">Confianza: media · Score: 4-3 a 5-4</p><div class="box">Soriano trae señal fuerte, pero Martin también tiene buen perfil, así que la ventaja se modera. Props: Mike Trout 1+ total base 64% · José Soriano 5+ strikeouts 61% · Munetaka Murakami 1+ total base 57%.</div></article>
+      <article class="card">
+        <h3>Marineros @ Twins</h3>
+        <span class="badge ok">ELEGIBLE</span><span class="badge ok">LINEUP COMPLETA</span>
+        <p class="meta">Estado: final · Parque: Target Field<br>Pitchers: Logan Gilbert, LD vs Joe Ryan, LD</p>
+        <div class="prob"><div class="probrow"><b>Marineros 50%</b><b>Twins 50%</b></div><div class="bar"><span style="width:50%"></span><span style="width:50%"></span></div></div>
+        <p><b>Confianza:</b> baja-media · <b>Rango estimado:</b> 3-3 a 4-4</p>
+        <p class="small">Duelo muy cerrado: ambos abridores llegan con perfiles similares de ponches y prevención.</p>
+        <ul><li>Sin ventaja clara de abridor.</li><li>Riesgo: ambos lineups tienen poder suficiente para romper equilibrio.</li></ul>
+        <table><tr><th>Jugador</th><th>Prop</th><th>Prob.</th><th>Conf.</th></tr><tr><td>Cal Raleigh</td><td>1+ total base</td><td>64%</td><td>Media</td></tr><tr><td>Byron Buxton</td><td>1+ total base</td><td>62%</td><td>Media</td></tr><tr><td>Logan Gilbert</td><td>5+ strikeouts</td><td>64%</td><td>Media</td></tr></table>
+      </article>
 
-      <article class="game"><div class="top"><div><h3>D-backs @ Brewers</h3><span class="badge b-ok">ELEGIBLE</span></div><div class="meta">American Family Field<br>Merrill Kelly RHP vs Chad Patrick RHP</div></div><div class="prob">D-backs 43% · <span class="winner">Brewers 57%</span></div><div class="bar"><div class="away" style="width:43%"></div><div class="home" style="width:57%"></div></div><p class="note">Confianza: media · Score: 4-5 a 4-6</p><div class="box">Patrick tiene ventaja marcada sobre Kelly por prevención reciente. Props: Ketel Marte 1+ hit 63% · William Contreras 1+ total base 60% · Corbin Carroll 1+ total base 58%.</div></article>
+      <article class="card">
+        <h3>Angels @ White Sox</h3>
+        <span class="badge ok">ELEGIBLE</span><span class="badge ok">LINEUP COMPLETA</span>
+        <p class="meta">Estado: final · Parque: Rate Field<br>Pitchers: José Soriano, LD vs Davis Martin, LD</p>
+        <div class="prob"><div class="probrow"><b>Angels 52%</b><b>White Sox 48%</b></div><div class="bar"><span style="width:52%"></span><span style="width:48%"></span></div></div>
+        <p><b>Confianza:</b> media · <b>Rango estimado:</b> 4-3 a 5-4</p>
+        <p class="small">Soriano llega con la mejor prevención del duelo; White Sox tiene zurdos que reducen margen.</p>
+        <ul><li>Ventaja ligera de abridor para Angels.</li><li>Riesgo: Martin también llega en buen momento y puede neutralizar poder derecho.</li></ul>
+        <table><tr><th>Jugador</th><th>Prop</th><th>Prob.</th><th>Conf.</th></tr><tr><td>Mike Trout</td><td>1+ total base</td><td>66%</td><td>Media</td></tr><tr><td>José Soriano</td><td>5+ strikeouts</td><td>63%</td><td>Media</td></tr><tr><td>Andrew Benintendi</td><td>1+ hit</td><td>61%</td><td>Media</td></tr></table>
+      </article>
 
-      <article class="game"><div class="top"><div><h3>Yankees @ Rangers</h3><span class="badge b-ok">ELEGIBLE</span></div><div class="meta">Globe Life Field<br>Cam Schlittler RHP vs Jacob deGrom RHP</div></div><div class="prob">Yankees 48% · <span class="winner">Rangers 52%</span></div><div class="bar"><div class="away" style="width:48%"></div><div class="home" style="width:52%"></div></div><p class="note">Confianza: media · Score: 3-4 a 4-5</p><div class="box">Dos abridores fuertes; Texas recibe ligera ventaja por deGrom y localía. Props: Aaron Judge 1+ total base 63% · Jacob deGrom 5+ strikeouts 62% · Corey Seager 1+ total base 59%.</div></article>
+      <article class="card">
+        <h3>D-backs @ Cerveceros</h3>
+        <span class="badge ok">ELEGIBLE</span><span class="badge ok">LINEUP COMPLETA</span>
+        <p class="meta">Estado: final · Parque: American Family Field<br>Pitchers: Merrill Kelly, LD vs Chad Patrick, LD</p>
+        <div class="prob"><div class="probrow"><b>D-backs 47%</b><b>Cerveceros 53%</b></div><div class="bar"><span style="width:47%"></span><span style="width:53%"></span></div></div>
+        <p><b>Confianza:</b> baja-media · <b>Rango estimado:</b> 4-4 a 5-4</p>
+        <p class="small">Milwaukee gana ligera ventaja por forma de Patrick; Arizona tiene núcleo superior para contacto y daño extra base.</p>
+        <ul><li>Ventaja reciente de abridor para Milwaukee.</li><li>Riesgo: Marte y Carroll elevan el techo ofensivo visitante.</li></ul>
+        <table><tr><th>Jugador</th><th>Prop</th><th>Prob.</th><th>Conf.</th></tr><tr><td>Ketel Marte</td><td>1+ hit</td><td>67%</td><td>Media</td></tr><tr><td>William Contreras</td><td>1+ hit</td><td>64%</td><td>Media</td></tr><tr><td>Chad Patrick</td><td>4+ strikeouts</td><td>58%</td><td>Media</td></tr></table>
+      </article>
 
-      <article class="game"><div class="top"><div><h3>Royals @ Athletics</h3><span class="badge b-ok">ELEGIBLE</span></div><div class="meta">Sutter Health Park<br>Kris Bubic LHP vs Aaron Civale RHP</div></div><div class="prob">Royals 50% · Athletics 50%</div><div class="bar"><div class="away" style="width:50%"></div><div class="home" style="width:50%"></div></div><p class="note">Confianza: baja-media · Score: 4-4 a 5-5</p><div class="box">Lectura prácticamente neutral: Bubic tiene más ponche, Athletics tienen poder derecho ante LHP. Props: Bobby Witt Jr. 1+ hit 64% · Brent Rooker 1+ total base 60% · Kris Bubic 4+ strikeouts 57%.</div></article>
+      <article class="card">
+        <h3>Yankees @ Rangers</h3>
+        <span class="badge ok">ELEGIBLE</span><span class="badge ok">LINEUP COMPLETA</span>
+        <p class="meta">Estado: final · Parque: Globe Life Field<br>Pitchers: Cam Schlittler, LD vs Jacob deGrom, LD</p>
+        <div class="prob"><div class="probrow"><b>Yankees 49%</b><b>Rangers 51%</b></div><div class="bar"><span style="width:49%"></span><span style="width:51%"></span></div></div>
+        <p><b>Confianza:</b> baja-media · <b>Rango estimado:</b> 3-3 a 5-4</p>
+        <p class="small">deGrom da ventaja mínima de abridor, pero Yankees presenta lineup de alto impacto y mejor registro general.</p>
+        <ul><li>Ventaja de abridor para Texas.</li><li>Riesgo: Judge, Bellinger y Chisholm pueden equilibrar con poder inmediato.</li></ul>
+        <table><tr><th>Jugador</th><th>Prop</th><th>Prob.</th><th>Conf.</th></tr><tr><td>Aaron Judge</td><td>1+ total base</td><td>68%</td><td>Media</td></tr><tr><td>Jacob deGrom</td><td>5+ strikeouts</td><td>67%</td><td>Media</td></tr><tr><td>Corey Seager</td><td>1+ hit</td><td>64%</td><td>Media</td></tr></table>
+      </article>
 
-      <article class="game"><div class="top"><div><h3>Cubs @ Padres</h3><span class="badge b-ok">NUEVO ELEGIBLE</span></div><div class="meta">Petco Park<br>Edward Cabrera RHP vs Walker Buehler RHP</div></div><div class="prob"><span class="winner">Cubs 52%</span> · Padres 48%</div><div class="bar"><div class="away" style="width:52%"></div><div class="home" style="width:48%"></div></div><p class="note">Confianza: media · Score: 4-4 a 5-4</p><div class="box">Cabrera llega con mejor prevención de carreras que Buehler. San Diego tiene localía y bates derechos fuertes arriba, pero Cubs muestran lineup más balanceado. Props: Seiya Suzuki 1+ total base 62% · Fernando Tatis Jr. 1+ hit 61% · Edward Cabrera 4+ strikeouts 57%.</div></article>
+      <article class="card">
+        <h3>Reales @ Atléticos</h3>
+        <span class="badge ok">ELEGIBLE</span><span class="badge ok">LINEUP COMPLETA</span>
+        <p class="meta">Estado: final · Parque: Sutter Health Park<br>Pitchers: Kris Bubic, LZ vs Aaron Civale, LD</p>
+        <div class="prob"><div class="probrow"><b>Reales 52%</b><b>Atléticos 48%</b></div><div class="bar"><span style="width:52%"></span><span style="width:48%"></span></div></div>
+        <p><b>Confianza:</b> baja-media · <b>Rango estimado:</b> 4-4 a 5-4</p>
+        <p class="small">Kansas City tiene mejor núcleo defensivo-ofensivo en la parte alta; Oakland compensa con poder derecho ante zurdo.</p>
+        <ul><li>Ventaja ligera para Kansas City por balance de lineup.</li><li>Riesgo: Rooker y Langeliers son amenazas de daño extra base.</li></ul>
+        <table><tr><th>Jugador</th><th>Prop</th><th>Prob.</th><th>Conf.</th></tr><tr><td>Bobby Witt Jr.</td><td>1+ hit</td><td>69%</td><td>Media</td></tr><tr><td>Brent Rooker</td><td>1+ total base</td><td>64%</td><td>Media</td></tr><tr><td>Kris Bubic</td><td>4+ strikeouts</td><td>60%</td><td>Media</td></tr></table>
+      </article>
 
-      <article class="game"><div class="top"><div><h3>Marlins @ Dodgers</h3><span class="badge b-ok">NUEVO ELEGIBLE</span></div><div class="meta">Dodger Stadium<br>Janson Junk RHP vs Shohei Ohtani RHP</div></div><div class="prob">Marlins 36% · <span class="winner">Dodgers 64%</span></div><div class="bar"><div class="away" style="width:36%"></div><div class="home" style="width:64%"></div></div><p class="note">Confianza: media-alta · Score: 3-5 a 3-6</p><div class="box">Ohtani trae una ventaja fuerte de abridor y Dodgers tienen mayor profundidad con Freeman, Smith, Tucker, Muncy y Hernández. Miami tiene contacto zurdo, pero el diferencial general favorece a Los Ángeles. Props: Freddie Freeman 1+ hit 65% · Shohei Ohtani 5+ strikeouts 63% · Kyle Tucker 1+ total base 61%.</div></article>
+      <article class="card">
+        <h3>Cachorros @ Padres</h3>
+        <span class="badge ok">ELEGIBLE</span><span class="badge ok">LINEUP COMPLETA</span>
+        <p class="meta">Estado: final · Parque: Petco Park<br>Pitchers: Edward Cabrera, LD vs Walker Buehler, LD</p>
+        <div class="prob"><div class="probrow"><b>Cachorros 54%</b><b>Padres 46%</b></div><div class="bar"><span style="width:54%"></span><span style="width:46%"></span></div></div>
+        <p><b>Confianza:</b> media · <b>Rango estimado:</b> 4-3 a 5-4</p>
+        <p class="small">Cabrera llega con mejor prevención; Cubs tiene balance de contacto y poder ante Buehler.</p>
+        <ul><li>Ventaja de abridor para Cubs.</li><li>Riesgo: Petco reduce margen ofensivo y Padres tiene parte alta peligrosa.</li></ul>
+        <table><tr><th>Jugador</th><th>Prop</th><th>Prob.</th><th>Conf.</th></tr><tr><td>Seiya Suzuki</td><td>1+ total base</td><td>65%</td><td>Media</td></tr><tr><td>Fernando Tatis Jr.</td><td>1+ hit</td><td>66%</td><td>Media</td></tr><tr><td>Edward Cabrera</td><td>4+ strikeouts</td><td>62%</td><td>Media</td></tr></table>
+      </article>
 
-      <article class="game"><div class="top"><div><h3>Rays @ Guardians</h3><span class="badge b-ok">ELEGIBLE</span></div><div class="meta">Final · Progressive Field<br>Nick Martinez RHP vs Tanner Bibee RHP</div></div><div class="prob"><span class="winner">Rays 53%</span> · Guardians 47%</div><div class="bar"><div class="away" style="width:53%"></div><div class="home" style="width:47%"></div></div><p class="note">Confianza: media · Score: 4-3 a 5-4</p><div class="box">Martinez mostró mejor prevención en la fuente; Cleveland carga bates zurdos/switch. Props: Chandler Simpson 1+ hit 62% · José Ramírez 1+ total base 61% · Yandy Díaz 1+ total base 59%.</div></article>
+      <article class="card">
+        <h3>Marlins @ Dodgers</h3>
+        <span class="badge ok">ELEGIBLE</span><span class="badge ok">LINEUP COMPLETA</span>
+        <p class="meta">Estado: final · Parque: UNIQLO Field at Dodger Stadium<br>Pitchers: Janson Junk, LD vs Shohei Ohtani, LD</p>
+        <div class="prob"><div class="probrow"><b>Marlins 35%</b><b>Dodgers 65%</b></div><div class="bar"><span style="width:35%"></span><span style="width:65%"></span></div></div>
+        <p><b>Confianza:</b> media · <b>Rango estimado:</b> 5-2 a 6-3</p>
+        <p class="small">Dodgers tienen la separación más clara por abridor dominante y lineup profundo con múltiples zurdos de poder.</p>
+        <ul><li>Ventaja fuerte de abridor y ofensiva para Dodgers.</li><li>Riesgo: Marlins tienen bateadores zurdos que pueden elevar tráfico temprano.</li></ul>
+        <table><tr><th>Jugador</th><th>Prop</th><th>Prob.</th><th>Conf.</th></tr><tr><td>Shohei Ohtani</td><td>6+ strikeouts</td><td>66%</td><td>Media</td></tr><tr><td>Freddie Freeman</td><td>1+ hit</td><td>70%</td><td>Media</td></tr><tr><td>Kyle Tucker</td><td>1+ total base</td><td>67%</td><td>Media</td></tr></table>
+      </article>
 
-    </div>
-  </section>
+    </section>
 
-  <section>
-    <h2>Juegos pendientes</h2>
-    <div class="box">
-      <strong>0 pendientes.</strong>
-      <p class="note">Todos los juegos del slate tienen ambos abridores y lineups completas de 9 bateadores por equipo.</p>
-    </div>
-  </section>
-</main>
+    <h2>Juegos pendientes o saltados</h2>
+    <section class="games skipped-games">
+      <article class="card pending">
+        <h3>Sin juegos pendientes</h3>
+        <span class="badge ok">0 PENDIENTES</span>
+        <p class="meta">Todos los juegos encontrados pasaron validación: equipos identificados, estado visible, pitchers detectados y dos lineups completas de 9 bateadores.</p>
+      </article>
+    </section>
+  </main>
 
-<footer>
-  Auditoría anti-momios: aprobada. QA: 15/15 juegos analizados; 0 pendientes; probabilidades por juego suman 100%.
-</footer>
+  <footer>
+    <p><b>Auditoría:</b> Este reporte fue generado sin consultar momios, líneas ni mercados de apuestas. Solo usa datos deportivos y lineups oficiales disponibles en MLB Starting Lineups.</p>
+    <p class="small">QA: no se analizaron juegos no elegibles; probabilidades por juego suman 100%; props deportivos con justificación contextual; sin recomendaciones de apuesta.</p>
+  </footer>
 </body>
 </html>
