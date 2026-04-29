@@ -5,10 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Análisis MLB Diario</title>
   <style>
-    :root{--bg:#f5f7fb;--card:#fff;--ink:#1f2937;--muted:#64748b;--line:#e5e7eb;--blue:#dbeafe;--green:#dcfce7;--amber:#fef3c7;--red:#fee2e2;--accent:#2563eb}
+    :root{
+      --bg:#f5f7fb;--card:#fff;--ink:#1f2937;--muted:#64748b;--line:#e5e7eb;
+      --blue:#dbeafe;--green:#dcfce7;--amber:#fef3c7;--red:#fee2e2;
+      --accent:#2563eb;--away:#60a5fa;--home:#a7f3d0;
+    }
     *{box-sizing:border-box}
     body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--ink)}
     header,footer{padding:16px 18px;background:#ffffff;border-bottom:1px solid var(--line)}
+    footer{border-top:1px solid var(--line);border-bottom:0;margin-top:14px}
     h1{margin:0 0 6px;font-size:24px}
     h2{margin:18px 0 10px;font-size:18px}
     h3{margin:0 0 8px;font-size:16px}
@@ -19,13 +24,17 @@
     .metric{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px}
     .metric b{display:block;font-size:22px}
     .badge{display:inline-block;padding:4px 8px;border-radius:999px;font-size:11px;font-weight:700;margin:2px 4px 2px 0}
-    .ok{background:var(--green);color:#166534}.diag{background:var(--blue);color:#1d4ed8}.warn{background:var(--amber);color:#92400e}.bad{background:var(--red);color:#991b1b}
-    .games{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:12px}
+    .ok{background:var(--green);color:#166534}
+    .diag{background:var(--blue);color:#1d4ed8}
+    .warn{background:var(--amber);color:#92400e}
+    .bad{background:var(--red);color:#991b1b}
+    .games{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:12px;align-items:start}
     .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px;box-shadow:0 2px 8px rgba(15,23,42,.04)}
     .meta{font-size:12px;color:var(--muted);line-height:1.35}
     .prob{margin:10px 0}
     .bar{height:12px;background:#e5e7eb;border-radius:999px;overflow:hidden;display:flex}
-    .bar span:first-child{background:#60a5fa}.bar span:last-child{background:#a7f3d0}
+    .bar span:first-child{background:var(--away)}
+    .bar span:last-child{background:var(--home)}
     .probrow{display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px}
     ul{margin:6px 0 8px 18px;padding:0;font-size:12px}
     table{width:100%;border-collapse:collapse;margin-top:8px;font-size:12px}
@@ -33,13 +42,18 @@
     th{color:#475569;background:#f8fafc}
     .small{font-size:11px;color:var(--muted)}
     .pending{background:#fff7ed}
-    @media(max-width:760px){.summary{grid-template-columns:repeat(2,1fr)}main{padding:10px}.games{grid-template-columns:1fr}}
+    .empty{border-style:dashed;background:#f8fafc}
+    @media(max-width:760px){
+      .summary{grid-template-columns:repeat(2,1fr)}
+      main{padding:10px}
+      .games{grid-template-columns:1fr}
+    }
   </style>
 </head>
 <body>
   <header>
     <h1>Análisis MLB Diario</h1>
-    <p><b>Fecha:</b> 2026-04-28 · <b>Fuente:</b> MLB Starting Lineups · <b>Modo:</b> Análisis completo</p>
+    <p><b>Fecha:</b> 2026-04-29 · <b>Fuente:</b> MLB Starting Lineups · <b>Modo:</b> análisis completo</p>
     <p class="note">Análisis independiente. No usa momios ni líneas de apuestas. Solo se incluyeron juegos con pitchers y lineups completas.</p>
     <span class="badge ok">Auditoría anti-momios: aprobada</span>
     <span class="badge diag">ANÁLISIS COMPLETO</span>
@@ -48,195 +62,195 @@
   <main>
     <section class="summary">
       <div class="metric"><span>Juegos encontrados</span><b>15</b></div>
-      <div class="metric"><span>Elegibles</span><b>15</b></div>
-      <div class="metric"><span>Pendientes</span><b>0</b></div>
+      <div class="metric"><span>Elegibles</span><b>4</b></div>
+      <div class="metric"><span>Pendientes</span><b>11</b></div>
       <div class="metric"><span>Generado</span><b>2026-04-29</b><span class="small">America/Mazatlan</span></div>
-      <div class="metric"><span>QA</span><b>Pass</b><span class="small">Sin fuentes de mercado</span></div>
+      <div class="metric"><span>QA</span><b>OK</b><span class="small">Sin issues críticos</span></div>
     </section>
 
     <h2>Juegos analizados</h2>
     <section class="games analyzed-games">
-
       <article class="card">
         <h3>Rays @ Guardians</h3>
         <span class="badge ok">ELEGIBLE</span><span class="badge ok">LINEUP COMPLETA</span>
-        <p class="meta">Estado: final · Parque: Progressive Field<br>Pitchers: Nick Martinez, LD vs Tanner Bibee, LD</p>
-        <div class="prob"><div class="probrow"><b>Rays 52%</b><b>Guardians 48%</b></div><div class="bar"><span style="width:52%"></span><span style="width:48%"></span></div></div>
+        <p class="meta">Estado: 1:10 PM ET · Parque: Progressive Field<br>Pitchers: Drew Rasmussen vs Gavin Williams</p>
+        <div class="prob">
+          <div class="probrow"><b>Rays 52%</b><b>Guardians 48%</b></div>
+          <div class="bar"><span style="width:52%"></span><span style="width:48%"></span></div>
+        </div>
         <p><b>Confianza:</b> media · <b>Rango estimado:</b> 4-3 a 5-4</p>
-        <p class="small">Martinez llega con mejor prevención de carreras; Cleveland compensa con varios zurdos y contacto alto en la parte superior.</p>
-        <ul><li>Ventaja ligera de abridor para Tampa Bay.</li><li>Riesgo: lineup de Cleveland cargado a zurdos ante pitcher derecho.</li></ul>
-        <table><tr><th>Jugador</th><th>Prop</th><th>Prob.</th><th>Conf.</th></tr><tr><td>Steven Kwan</td><td>1+ hit</td><td>66%</td><td>Media</td></tr><tr><td>Junior Caminero</td><td>1+ total base</td><td>62%</td><td>Media</td></tr><tr><td>Tanner Bibee</td><td>4+ strikeouts</td><td>61%</td><td>Media</td></tr></table>
-      </article>
-
-      <article class="card">
-        <h3>Astros @ Orioles</h3>
-        <span class="badge ok">ELEGIBLE</span><span class="badge ok">LINEUP COMPLETA</span>
-        <p class="meta">Estado: final · Parque: Oriole Park at Camden Yards<br>Pitchers: Kai-Wei Teng, LD vs Shane Baz, LD</p>
-        <div class="prob"><div class="probrow"><b>Astros 49%</b><b>Orioles 51%</b></div><div class="bar"><span style="width:49%"></span><span style="width:51%"></span></div></div>
-        <p><b>Confianza:</b> baja-media · <b>Rango estimado:</b> 4-4 a 5-4</p>
-        <p class="small">Baltimore tiene ligera ventaja por profundidad ofensiva y poder medio; Houston presenta bates de contacto y poder en el núcleo.</p>
-        <ul><li>Baz ofrece techo de ponches razonable.</li><li>Riesgo: ambos lineups tienen poder suficiente para cambiar el juego temprano.</li></ul>
-        <table><tr><th>Jugador</th><th>Prop</th><th>Prob.</th><th>Conf.</th></tr><tr><td>Yordan Alvarez</td><td>1+ total base</td><td>65%</td><td>Media</td></tr><tr><td>Gunnar Henderson</td><td>1+ hit</td><td>63%</td><td>Media</td></tr><tr><td>Shane Baz</td><td>4+ strikeouts</td><td>60%</td><td>Media</td></tr></table>
-      </article>
-
-      <article class="card">
-        <h3>Rockies @ Rojos</h3>
-        <span class="badge ok">ELEGIBLE</span><span class="badge ok">LINEUP COMPLETA</span>
-        <p class="meta">Estado: final · Parque: Great American Ball Park<br>Pitchers: Kyle Freeland, LZ vs Chase Burns, LD</p>
-        <div class="prob"><div class="probrow"><b>Rockies 42%</b><b>Rojos 58%</b></div><div class="bar"><span style="width:42%"></span><span style="width:58%"></span></div></div>
-        <p><b>Confianza:</b> media · <b>Rango estimado:</b> 5-4 a 6-4</p>
-        <p class="small">Burns entra con perfil de mayor dominio; Cincinnati alinea varios bates derechos contra Freeland en parque favorable al bateo.</p>
-        <ul><li>Ventaja de abridor y contexto ofensivo para Cincinnati.</li><li>Riesgo: el parque eleva volatilidad para ambos pitchers.</li></ul>
-        <table><tr><th>Jugador</th><th>Prop</th><th>Prob.</th><th>Conf.</th></tr><tr><td>Elly De La Cruz</td><td>1+ total base</td><td>66%</td><td>Media</td></tr><tr><td>Matt McLain</td><td>1+ hit</td><td>62%</td><td>Media</td></tr><tr><td>Chase Burns</td><td>5+ strikeouts</td><td>64%</td><td>Media</td></tr></table>
-      </article>
-
-      <article class="card">
-        <h3>Cardenales @ Piratas</h3>
-        <span class="badge ok">ELEGIBLE</span><span class="badge ok">LINEUP COMPLETA</span>
-        <p class="meta">Estado: final · Parque: PNC Park<br>Pitchers: Kyle Leahy, LD vs Braxton Ashcraft, LD</p>
-        <div class="prob"><div class="probrow"><b>Cardenales 47%</b><b>Piratas 53%</b></div><div class="bar"><span style="width:47%"></span><span style="width:53%"></span></div></div>
-        <p><b>Confianza:</b> media · <b>Rango estimado:</b> 4-4 a 5-4</p>
-        <p class="small">Ashcraft muestra mejor combinación de prevención y ponches; Pittsburgh suma zurdos de impacto ante Leahy.</p>
-        <ul><li>Ventaja moderada de abridor local.</li><li>Riesgo: St. Louis tiene zurdos que pueden presionar temprano.</li></ul>
-        <table><tr><th>Jugador</th><th>Prop</th><th>Prob.</th><th>Conf.</th></tr><tr><td>Oneil Cruz</td><td>1+ total base</td><td>65%</td><td>Media</td></tr><tr><td>Braxton Ashcraft</td><td>4+ strikeouts</td><td>63%</td><td>Media</td></tr><tr><td>Alec Burleson</td><td>1+ hit</td><td>61%</td><td>Media</td></tr></table>
-      </article>
-
-      <article class="card">
-        <h3>Gigantes @ Phillies</h3>
-        <span class="badge ok">ELEGIBLE</span><span class="badge ok">LINEUP COMPLETA</span>
-        <p class="meta">Estado: final · Parque: Citizens Bank Park<br>Pitchers: Tyler Mahle, LD vs Jesús Luzardo, LZ</p>
-        <div class="prob"><div class="probrow"><b>Gigantes 51%</b><b>Phillies 49%</b></div><div class="bar"><span style="width:51%"></span><span style="width:49%"></span></div></div>
-        <p><b>Confianza:</b> baja · <b>Rango estimado:</b> 4-4 a 5-5</p>
-        <p class="small">Luzardo aporta ponches, pero su prevención reciente eleva riesgo. San Francisco mezcla contacto zurdo y poder derecho.</p>
-        <ul><li>Duelo muy parejo por calidad de lineups.</li><li>Riesgo: Citizens Bank puede amplificar contacto fuerte.</li></ul>
-        <table><tr><th>Jugador</th><th>Prop</th><th>Prob.</th><th>Conf.</th></tr><tr><td>Luis Arraez</td><td>1+ hit</td><td>70%</td><td>Media</td></tr><tr><td>Bryce Harper</td><td>1+ total base</td><td>66%</td><td>Media</td></tr><tr><td>Jesús Luzardo</td><td>5+ strikeouts</td><td>62%</td><td>Media</td></tr></table>
-      </article>
-
-      <article class="card">
-        <h3>Red Sox @ Azulejos</h3>
-        <span class="badge ok">ELEGIBLE</span><span class="badge ok">LINEUP COMPLETA</span>
-        <p class="meta">Estado: final · Parque: Rogers Centre<br>Pitchers: Payton Tolle, LZ vs Trey Yesavage, LD</p>
-        <div class="prob"><div class="probrow"><b>Red Sox 48%</b><b>Azulejos 52%</b></div><div class="bar"><span style="width:48%"></span><span style="width:52%"></span></div></div>
-        <p><b>Confianza:</b> baja-media · <b>Rango estimado:</b> 4-4 a 5-4</p>
-        <p class="small">Toronto tiene ventaja leve por localía y núcleo derecho ante zurdo; Boston contrarresta con zurdos de impacto ante derecho.</p>
-        <ul><li>Lineups balanceados, sin separación fuerte.</li><li>Riesgo: muestras de pitchers aún reducidas.</li></ul>
-        <table><tr><th>Jugador</th><th>Prop</th><th>Prob.</th><th>Conf.</th></tr><tr><td>Vladimir Guerrero Jr.</td><td>1+ total base</td><td>67%</td><td>Media</td></tr><tr><td>Jarren Duran</td><td>1+ hit</td><td>64%</td><td>Media</td></tr><tr><td>Roman Anthony</td><td>1+ total base</td><td>60%</td><td>Media</td></tr></table>
-      </article>
-
-      <article class="card">
-        <h3>Nacionales @ Mets</h3>
-        <span class="badge ok">ELEGIBLE</span><span class="badge ok">LINEUP COMPLETA</span>
-        <p class="meta">Estado: final · Parque: Citi Field<br>Pitchers: Zack Littell, LD vs Clay Holmes, LD</p>
-        <div class="prob"><div class="probrow"><b>Nacionales 40%</b><b>Mets 60%</b></div><div class="bar"><span style="width:40%"></span><span style="width:60%"></span></div></div>
-        <p><b>Confianza:</b> media · <b>Rango estimado:</b> 5-3 a 6-4</p>
-        <p class="small">Holmes presenta ventaja clara de prevención frente a Littell; Mets tiene más poder concentrado en el tramo alto.</p>
-        <ul><li>Ventaja de abridor y poder para Mets.</li><li>Riesgo: Washington tiene varios zurdos de contacto.</li></ul>
-        <table><tr><th>Jugador</th><th>Prop</th><th>Prob.</th><th>Conf.</th></tr><tr><td>Juan Soto</td><td>1+ walk</td><td>68%</td><td>Media</td></tr><tr><td>Bo Bichette</td><td>1+ hit</td><td>65%</td><td>Media</td></tr><tr><td>Clay Holmes</td><td>5+ innings pitched</td><td>61%</td><td>Media</td></tr></table>
-      </article>
-
-      <article class="card">
-        <h3>Tigres @ Bravos</h3>
-        <span class="badge ok">ELEGIBLE</span><span class="badge ok">LINEUP COMPLETA</span>
-        <p class="meta">Estado: final · Parque: Truist Park<br>Pitchers: Casey Mize, LD vs Martín Pérez, LZ</p>
-        <div class="prob"><div class="probrow"><b>Tigres 47%</b><b>Bravos 53%</b></div><div class="bar"><span style="width:47%"></span><span style="width:53%"></span></div></div>
-        <p><b>Confianza:</b> media · <b>Rango estimado:</b> 4-4 a 5-4</p>
-        <p class="small">Atlanta tiene lineup profundo y récord fuerte; Detroit cuenta con varios derechos ante el zurdo Pérez.</p>
-        <ul><li>Ventaja ofensiva ligera para Atlanta.</li><li>Riesgo: matchup mano a mano favorece a varios bates de Detroit.</li></ul>
-        <table><tr><th>Jugador</th><th>Prop</th><th>Prob.</th><th>Conf.</th></tr><tr><td>Ronald Acuña Jr.</td><td>1+ hit</td><td>67%</td><td>Media</td></tr><tr><td>Matt Olson</td><td>1+ total base</td><td>64%</td><td>Media</td></tr><tr><td>Casey Mize</td><td>4+ strikeouts</td><td>59%</td><td>Media</td></tr></table>
-      </article>
-
-      <article class="card">
-        <h3>Marineros @ Twins</h3>
-        <span class="badge ok">ELEGIBLE</span><span class="badge ok">LINEUP COMPLETA</span>
-        <p class="meta">Estado: final · Parque: Target Field<br>Pitchers: Logan Gilbert, LD vs Joe Ryan, LD</p>
-        <div class="prob"><div class="probrow"><b>Marineros 50%</b><b>Twins 50%</b></div><div class="bar"><span style="width:50%"></span><span style="width:50%"></span></div></div>
-        <p><b>Confianza:</b> baja-media · <b>Rango estimado:</b> 3-3 a 4-4</p>
-        <p class="small">Duelo muy cerrado: ambos abridores llegan con perfiles similares de ponches y prevención.</p>
-        <ul><li>Sin ventaja clara de abridor.</li><li>Riesgo: ambos lineups tienen poder suficiente para romper equilibrio.</li></ul>
-        <table><tr><th>Jugador</th><th>Prop</th><th>Prob.</th><th>Conf.</th></tr><tr><td>Cal Raleigh</td><td>1+ total base</td><td>64%</td><td>Media</td></tr><tr><td>Byron Buxton</td><td>1+ total base</td><td>62%</td><td>Media</td></tr><tr><td>Logan Gilbert</td><td>5+ strikeouts</td><td>64%</td><td>Media</td></tr></table>
+        <p class="small">Duelo equilibrado entre abridores derechos. Rasmussen llega con mejor prevención de carreras; Williams aporta mayor volumen de ponches. Ambos lineups están cargados de bateadores zurdos o ambidiestros, lo que mantiene el margen estrecho.</p>
+        <ul>
+          <li>Factor: Rays tienen ligera ventaja por récord, abridor más estable y profundidad zurda contra RHP.</li>
+          <li>Riesgo: Williams puede neutralizar rallies si sostiene su dominio de ponches.</li>
+        </ul>
+        <table>
+          <tr><th>Jugador</th><th>Prop</th><th>Prob.</th><th>Conf.</th></tr>
+          <tr><td>Steven Kwan</td><td>1+ hit</td><td>67%</td><td>Media</td></tr>
+          <tr><td>Yandy Díaz</td><td>1+ total base</td><td>65%</td><td>Media</td></tr>
+          <tr><td>José Ramírez</td><td>1+ total base</td><td>64%</td><td>Media</td></tr>
+          <tr><td>Drew Rasmussen</td><td>4+ strikeouts</td><td>58%</td><td>Media</td></tr>
+          <tr><td>Gavin Williams</td><td>5+ strikeouts</td><td>57%</td><td>Media</td></tr>
+        </table>
       </article>
 
       <article class="card">
         <h3>Angels @ White Sox</h3>
         <span class="badge ok">ELEGIBLE</span><span class="badge ok">LINEUP COMPLETA</span>
-        <p class="meta">Estado: final · Parque: Rate Field<br>Pitchers: José Soriano, LD vs Davis Martin, LD</p>
-        <div class="prob"><div class="probrow"><b>Angels 52%</b><b>White Sox 48%</b></div><div class="bar"><span style="width:52%"></span><span style="width:48%"></span></div></div>
-        <p><b>Confianza:</b> media · <b>Rango estimado:</b> 4-3 a 5-4</p>
-        <p class="small">Soriano llega con la mejor prevención del duelo; White Sox tiene zurdos que reducen margen.</p>
-        <ul><li>Ventaja ligera de abridor para Angels.</li><li>Riesgo: Martin también llega en buen momento y puede neutralizar poder derecho.</li></ul>
-        <table><tr><th>Jugador</th><th>Prop</th><th>Prob.</th><th>Conf.</th></tr><tr><td>Mike Trout</td><td>1+ total base</td><td>66%</td><td>Media</td></tr><tr><td>José Soriano</td><td>5+ strikeouts</td><td>63%</td><td>Media</td></tr><tr><td>Andrew Benintendi</td><td>1+ hit</td><td>61%</td><td>Media</td></tr></table>
+        <p class="meta">Estado: 1:10 PM ET · Parque: Rate Field<br>Pitchers: Yusei Kikuchi vs Erick Fedde</p>
+        <div class="prob">
+          <div class="probrow"><b>Angels 49%</b><b>White Sox 51%</b></div>
+          <div class="bar"><span style="width:49%"></span><span style="width:51%"></span></div>
+        </div>
+        <p><b>Confianza:</b> baja-media · <b>Rango estimado:</b> 5-4 a 6-5</p>
+        <p class="small">Fedde ofrece mejor perfil de prevención de carreras, pero el lineup de Angels tiene múltiples derechos de poder contra un contexto vulnerable. Kikuchi enfrenta un lineup de White Sox con varios derechos en la parte alta y media.</p>
+        <ul>
+          <li>Factor: White Sox reciben leve ventaja por abridor más estable y localía.</li>
+          <li>Riesgo: Angels tienen más poder concentrado en Neto, Trout, Soler y Adell.</li>
+        </ul>
+        <table>
+          <tr><th>Jugador</th><th>Prop</th><th>Prob.</th><th>Conf.</th></tr>
+          <tr><td>Mike Trout</td><td>1+ total base</td><td>66%</td><td>Media</td></tr>
+          <tr><td>Zach Neto</td><td>1+ hit</td><td>62%</td><td>Media</td></tr>
+          <tr><td>Munetaka Murakami</td><td>1+ total base</td><td>60%</td><td>Media</td></tr>
+          <tr><td>Austin Hays</td><td>1+ hit</td><td>58%</td><td>Media</td></tr>
+          <tr><td>Erick Fedde</td><td>5+ innings pitched</td><td>56%</td><td>Media</td></tr>
+        </table>
       </article>
 
       <article class="card">
-        <h3>D-backs @ Cerveceros</h3>
+        <h3>Mariners @ Twins</h3>
         <span class="badge ok">ELEGIBLE</span><span class="badge ok">LINEUP COMPLETA</span>
-        <p class="meta">Estado: final · Parque: American Family Field<br>Pitchers: Merrill Kelly, LD vs Chad Patrick, LD</p>
-        <div class="prob"><div class="probrow"><b>D-backs 47%</b><b>Cerveceros 53%</b></div><div class="bar"><span style="width:47%"></span><span style="width:53%"></span></div></div>
-        <p><b>Confianza:</b> baja-media · <b>Rango estimado:</b> 4-4 a 5-4</p>
-        <p class="small">Milwaukee gana ligera ventaja por forma de Patrick; Arizona tiene núcleo superior para contacto y daño extra base.</p>
-        <ul><li>Ventaja reciente de abridor para Milwaukee.</li><li>Riesgo: Marte y Carroll elevan el techo ofensivo visitante.</li></ul>
-        <table><tr><th>Jugador</th><th>Prop</th><th>Prob.</th><th>Conf.</th></tr><tr><td>Ketel Marte</td><td>1+ hit</td><td>67%</td><td>Media</td></tr><tr><td>William Contreras</td><td>1+ hit</td><td>64%</td><td>Media</td></tr><tr><td>Chad Patrick</td><td>4+ strikeouts</td><td>58%</td><td>Media</td></tr></table>
+        <p class="meta">Estado: 1:40 PM ET · Parque: Target Field<br>Pitchers: George Kirby vs Taj Bradley</p>
+        <div class="prob">
+          <div class="probrow"><b>Mariners 53%</b><b>Twins 47%</b></div>
+          <div class="bar"><span style="width:53%"></span><span style="width:47%"></span></div>
+        </div>
+        <p><b>Confianza:</b> media · <b>Rango estimado:</b> 4-3 a 5-4</p>
+        <p class="small">Kirby y Bradley llegan con números muy cercanos de prevención de carreras. La ventaja mínima se inclina a Seattle por mayor balance ofensivo y varios zurdos en zonas de producción contra RHP.</p>
+        <ul>
+          <li>Factor: Mariners presentan mezcla de contacto, poder zurdo y bateadores de alto impacto en los primeros cinco turnos.</li>
+          <li>Riesgo: Twins tienen poder derecho con Buxton, Jeffers y Lewis para cambiar el juego rápido.</li>
+        </ul>
+        <table>
+          <tr><th>Jugador</th><th>Prop</th><th>Prob.</th><th>Conf.</th></tr>
+          <tr><td>Julio Rodríguez</td><td>1+ total base</td><td>66%</td><td>Media</td></tr>
+          <tr><td>Cal Raleigh</td><td>1+ total base</td><td>62%</td><td>Media</td></tr>
+          <tr><td>Byron Buxton</td><td>1+ total base</td><td>61%</td><td>Media</td></tr>
+          <tr><td>Josh Naylor</td><td>1+ hit</td><td>59%</td><td>Media</td></tr>
+          <tr><td>George Kirby</td><td>5+ innings pitched</td><td>60%</td><td>Media</td></tr>
+        </table>
       </article>
 
       <article class="card">
         <h3>Yankees @ Rangers</h3>
         <span class="badge ok">ELEGIBLE</span><span class="badge ok">LINEUP COMPLETA</span>
-        <p class="meta">Estado: final · Parque: Globe Life Field<br>Pitchers: Cam Schlittler, LD vs Jacob deGrom, LD</p>
-        <div class="prob"><div class="probrow"><b>Yankees 49%</b><b>Rangers 51%</b></div><div class="bar"><span style="width:49%"></span><span style="width:51%"></span></div></div>
-        <p><b>Confianza:</b> baja-media · <b>Rango estimado:</b> 3-3 a 5-4</p>
-        <p class="small">deGrom da ventaja mínima de abridor, pero Yankees presenta lineup de alto impacto y mejor registro general.</p>
-        <ul><li>Ventaja de abridor para Texas.</li><li>Riesgo: Judge, Bellinger y Chisholm pueden equilibrar con poder inmediato.</li></ul>
-        <table><tr><th>Jugador</th><th>Prop</th><th>Prob.</th><th>Conf.</th></tr><tr><td>Aaron Judge</td><td>1+ total base</td><td>68%</td><td>Media</td></tr><tr><td>Jacob deGrom</td><td>5+ strikeouts</td><td>67%</td><td>Media</td></tr><tr><td>Corey Seager</td><td>1+ hit</td><td>64%</td><td>Media</td></tr></table>
+        <p class="meta">Estado: 2:35 PM ET · Parque: Globe Life Field<br>Pitchers: Elmer Rodríguez vs Nathan Eovaldi</p>
+        <div class="prob">
+          <div class="probrow"><b>Yankees 55%</b><b>Rangers 45%</b></div>
+          <div class="bar"><span style="width:55%"></span><span style="width:45%"></span></div>
+        </div>
+        <p><b>Confianza:</b> baja-media · <b>Rango estimado:</b> 5-4 a 6-4</p>
+        <p class="small">Yankees tienen el lineup más profundo entre los juegos elegibles y enfrentan a un abridor con ERA elevada. El riesgo principal es la incertidumbre del abridor visitante, que aparece sin muestra MLB relevante en la página.</p>
+        <ul>
+          <li>Factor: Yankees combinan poder, disciplina y múltiples zurdos contra RHP.</li>
+          <li>Riesgo: Elmer Rodríguez es una variable de alta incertidumbre y Texas tiene zurdos peligrosos en la parte alta-media.</li>
+        </ul>
+        <table>
+          <tr><th>Jugador</th><th>Prop</th><th>Prob.</th><th>Conf.</th></tr>
+          <tr><td>Aaron Judge</td><td>1+ total base</td><td>70%</td><td>Alta</td></tr>
+          <tr><td>Corey Seager</td><td>1+ total base</td><td>65%</td><td>Media</td></tr>
+          <tr><td>Ben Rice</td><td>1+ hit</td><td>61%</td><td>Media</td></tr>
+          <tr><td>Cody Bellinger</td><td>1+ total base</td><td>60%</td><td>Media</td></tr>
+          <tr><td>Nathan Eovaldi</td><td>4+ strikeouts</td><td>55%</td><td>Media</td></tr>
+        </table>
       </article>
-
-      <article class="card">
-        <h3>Reales @ Atléticos</h3>
-        <span class="badge ok">ELEGIBLE</span><span class="badge ok">LINEUP COMPLETA</span>
-        <p class="meta">Estado: final · Parque: Sutter Health Park<br>Pitchers: Kris Bubic, LZ vs Aaron Civale, LD</p>
-        <div class="prob"><div class="probrow"><b>Reales 52%</b><b>Atléticos 48%</b></div><div class="bar"><span style="width:52%"></span><span style="width:48%"></span></div></div>
-        <p><b>Confianza:</b> baja-media · <b>Rango estimado:</b> 4-4 a 5-4</p>
-        <p class="small">Kansas City tiene mejor núcleo defensivo-ofensivo en la parte alta; Oakland compensa con poder derecho ante zurdo.</p>
-        <ul><li>Ventaja ligera para Kansas City por balance de lineup.</li><li>Riesgo: Rooker y Langeliers son amenazas de daño extra base.</li></ul>
-        <table><tr><th>Jugador</th><th>Prop</th><th>Prob.</th><th>Conf.</th></tr><tr><td>Bobby Witt Jr.</td><td>1+ hit</td><td>69%</td><td>Media</td></tr><tr><td>Brent Rooker</td><td>1+ total base</td><td>64%</td><td>Media</td></tr><tr><td>Kris Bubic</td><td>4+ strikeouts</td><td>60%</td><td>Media</td></tr></table>
-      </article>
-
-      <article class="card">
-        <h3>Cachorros @ Padres</h3>
-        <span class="badge ok">ELEGIBLE</span><span class="badge ok">LINEUP COMPLETA</span>
-        <p class="meta">Estado: final · Parque: Petco Park<br>Pitchers: Edward Cabrera, LD vs Walker Buehler, LD</p>
-        <div class="prob"><div class="probrow"><b>Cachorros 54%</b><b>Padres 46%</b></div><div class="bar"><span style="width:54%"></span><span style="width:46%"></span></div></div>
-        <p><b>Confianza:</b> media · <b>Rango estimado:</b> 4-3 a 5-4</p>
-        <p class="small">Cabrera llega con mejor prevención; Cubs tiene balance de contacto y poder ante Buehler.</p>
-        <ul><li>Ventaja de abridor para Cubs.</li><li>Riesgo: Petco reduce margen ofensivo y Padres tiene parte alta peligrosa.</li></ul>
-        <table><tr><th>Jugador</th><th>Prop</th><th>Prob.</th><th>Conf.</th></tr><tr><td>Seiya Suzuki</td><td>1+ total base</td><td>65%</td><td>Media</td></tr><tr><td>Fernando Tatis Jr.</td><td>1+ hit</td><td>66%</td><td>Media</td></tr><tr><td>Edward Cabrera</td><td>4+ strikeouts</td><td>62%</td><td>Media</td></tr></table>
-      </article>
-
-      <article class="card">
-        <h3>Marlins @ Dodgers</h3>
-        <span class="badge ok">ELEGIBLE</span><span class="badge ok">LINEUP COMPLETA</span>
-        <p class="meta">Estado: final · Parque: UNIQLO Field at Dodger Stadium<br>Pitchers: Janson Junk, LD vs Shohei Ohtani, LD</p>
-        <div class="prob"><div class="probrow"><b>Marlins 35%</b><b>Dodgers 65%</b></div><div class="bar"><span style="width:35%"></span><span style="width:65%"></span></div></div>
-        <p><b>Confianza:</b> media · <b>Rango estimado:</b> 5-2 a 6-3</p>
-        <p class="small">Dodgers tienen la separación más clara por abridor dominante y lineup profundo con múltiples zurdos de poder.</p>
-        <ul><li>Ventaja fuerte de abridor y ofensiva para Dodgers.</li><li>Riesgo: Marlins tienen bateadores zurdos que pueden elevar tráfico temprano.</li></ul>
-        <table><tr><th>Jugador</th><th>Prop</th><th>Prob.</th><th>Conf.</th></tr><tr><td>Shohei Ohtani</td><td>6+ strikeouts</td><td>66%</td><td>Media</td></tr><tr><td>Freddie Freeman</td><td>1+ hit</td><td>70%</td><td>Media</td></tr><tr><td>Kyle Tucker</td><td>1+ total base</td><td>67%</td><td>Media</td></tr></table>
-      </article>
-
     </section>
 
     <h2>Juegos pendientes o saltados</h2>
     <section class="games skipped-games">
       <article class="card pending">
-        <h3>Sin juegos pendientes</h3>
-        <span class="badge ok">0 PENDIENTES</span>
-        <p class="meta">Todos los juegos encontrados pasaron validación: equipos identificados, estado visible, pitchers detectados y dos lineups completas de 9 bateadores.</p>
+        <h3>Red Sox @ Blue Jays</h3>
+        <span class="badge warn">PENDIENTE</span><span class="badge warn">MISSING_AWAY_LINEUP</span>
+        <p class="meta">Hora/estado: 3:07 PM ET<br>Pitchers: Brayan Bello vs Eric Lauer</p>
+        <p><b>Razón:</b> MLB muestra TBD para las lineups; no se analiza hasta tener 9 bateadores por equipo.</p>
+      </article>
+
+      <article class="card pending">
+        <h3>Marlins @ Dodgers</h3>
+        <span class="badge warn">PENDIENTE</span><span class="badge warn">MISSING_AWAY_LINEUP</span>
+        <p class="meta">Hora/estado: 3:10 PM ET<br>Pitchers: Sandy Alcantara vs Tyler Glasnow</p>
+        <p><b>Razón:</b> MLB muestra TBD para las lineups; no se analiza hasta tener 9 bateadores por equipo.</p>
+      </article>
+
+      <article class="card pending">
+        <h3>Cubs @ Padres</h3>
+        <span class="badge warn">PENDIENTE</span><span class="badge warn">MISSING_AWAY_LINEUP</span>
+        <p class="meta">Hora/estado: 4:10 PM ET<br>Pitchers: Jameson Taillon vs Matt Waldron</p>
+        <p><b>Razón:</b> MLB muestra TBD para las lineups; no se analiza hasta tener 9 bateadores por equipo.</p>
+      </article>
+
+      <article class="card pending">
+        <h3>Astros @ Orioles</h3>
+        <span class="badge warn">PENDIENTE</span><span class="badge warn">MISSING_AWAY_LINEUP</span>
+        <p class="meta">Hora/estado: 6:35 PM ET<br>Pitchers: Peter Lambert vs Chris Bassitt</p>
+        <p><b>Razón:</b> MLB muestra TBD para las lineups; no se analiza hasta tener 9 bateadores por equipo.</p>
+      </article>
+
+      <article class="card pending">
+        <h3>Rockies @ Reds</h3>
+        <span class="badge warn">PENDIENTE</span><span class="badge warn">MISSING_AWAY_LINEUP</span>
+        <p class="meta">Hora/estado: 6:40 PM ET<br>Pitchers: Tomoyuki Sugano vs Brandon Williamson</p>
+        <p><b>Razón:</b> MLB muestra TBD para las lineups; no se analiza hasta tener 9 bateadores por equipo.</p>
+      </article>
+
+      <article class="card pending">
+        <h3>Cardinals @ Pirates</h3>
+        <span class="badge warn">PENDIENTE</span><span class="badge warn">MISSING_AWAY_LINEUP</span>
+        <p class="meta">Hora/estado: 6:40 PM ET<br>Pitchers: Andre Pallante vs Bubba Chandler</p>
+        <p><b>Razón:</b> MLB muestra TBD para las lineups; no se analiza hasta tener 9 bateadores por equipo.</p>
+      </article>
+
+      <article class="card pending">
+        <h3>Giants @ Phillies</h3>
+        <span class="badge warn">PENDIENTE</span><span class="badge warn">MISSING_AWAY_LINEUP</span>
+        <p class="meta">Hora/estado: 6:40 PM ET<br>Pitchers: Logan Webb vs Cristopher Sánchez</p>
+        <p><b>Razón:</b> MLB muestra TBD para las lineups; no se analiza hasta tener 9 bateadores por equipo.</p>
+      </article>
+
+      <article class="card pending">
+        <h3>Nationals @ Mets</h3>
+        <span class="badge warn">PENDIENTE</span><span class="badge warn">MISSING_AWAY_LINEUP</span>
+        <p class="meta">Hora/estado: 7:10 PM ET<br>Pitchers: Cade Cavalli vs David Peterson</p>
+        <p><b>Razón:</b> MLB muestra TBD para las lineups; no se analiza hasta tener 9 bateadores por equipo.</p>
+      </article>
+
+      <article class="card pending">
+        <h3>Tigers @ Braves</h3>
+        <span class="badge warn">PENDIENTE</span><span class="badge warn">MISSING_AWAY_LINEUP</span>
+        <p class="meta">Hora/estado: 7:15 PM ET<br>Pitchers: Tarik Skubal vs JR Ritchie</p>
+        <p><b>Razón:</b> MLB muestra TBD para las lineups; no se analiza hasta tener 9 bateadores por equipo.</p>
+      </article>
+
+      <article class="card pending">
+        <h3>D-backs @ Brewers</h3>
+        <span class="badge warn">PENDIENTE</span><span class="badge warn">MISSING_AWAY_LINEUP</span>
+        <p class="meta">Hora/estado: 7:40 PM ET<br>Pitchers: Eduardo Rodriguez vs Brandon Sproat</p>
+        <p><b>Razón:</b> MLB muestra TBD para las lineups; no se analiza hasta tener 9 bateadores por equipo.</p>
+      </article>
+
+      <article class="card pending">
+        <h3>Royals @ Athletics</h3>
+        <span class="badge warn">PENDIENTE</span><span class="badge warn">MISSING_AWAY_LINEUP</span>
+        <p class="meta">Hora/estado: 9:40 PM ET<br>Pitchers: Michael Wacha vs Luis Severino</p>
+        <p><b>Razón:</b> MLB muestra TBD para las lineups; no se analiza hasta tener 9 bateadores por equipo.</p>
       </article>
     </section>
   </main>
 
   <footer>
     <p><b>Auditoría:</b> Este reporte fue generado sin consultar momios, líneas ni mercados de apuestas. Solo usa datos deportivos y lineups oficiales disponibles en MLB Starting Lineups.</p>
-    <p class="small">QA: no se analizaron juegos no elegibles; probabilidades por juego suman 100%; props deportivos con justificación contextual; sin recomendaciones de apuesta.</p>
+    <p class="small">QA: auditoría aprobada. Solo se analizaron juegos elegibles con dos abridores detectados y lineups completas. Probabilidades internas normalizadas a 100% por juego.</p>
   </footer>
 </body>
 </html>
